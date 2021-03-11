@@ -18,6 +18,11 @@ enum layer_number {
     _FUNCTION,
 };
 
+enum custom_keycodes {
+    SW_APP = SAFE_RANGE,
+    SW_WIND,
+};
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /* COLEMAK
@@ -55,7 +60,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______,      _______,      _______,      _______,      _______,                   _______, _______,         _______,       _______,         _______,        _______,
         _______, KC_0,         KC_4,         KC_3,         KC_5,         KC_5,                      KC_LBRC, KC_LCBR,         KC_0,          KC_RCBR,         KC_RBRC,        _______,
         _______, LSFT_T(KC_6), LALT_T(KC_1), LCTL_T(KC_2), LGUI_T(KC_0), KC_6,                      KC_LEFT, RGUI_T(KC_DOWN), RCTL_T(KC_UP), RALT_T(KC_RGHT), RSFT_T(KC_EQL), KC_UNDS,
-        _______, KC_0,         KC_7,         KC_8,         KC_9,         _______, _______, _______, _______, KC_MINS,         KC_UNDS,       KC_PLUS,         KC_SLSH,        _______,
+        _______, KC_0,         KC_7,         KC_8,         KC_9,         _______, _______, SW_WIND, _______, KC_MINS,         KC_UNDS,       KC_PLUS,         KC_SLSH,        _______,
                                              _______,      _______,      _______, _______, _______, _______, _______,         _______
     ),
 
@@ -63,7 +68,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______,  _______, _______, _______, _______,                   _______, _______, _______, _______, _______, _______,
         _______, KC_3,     KC_2,    KC_0,    KC_1,    KC_0,                      KC_CIRC, KC_LCBR, KC_ASTR, KC_RCBR, _______, _______,
         _______, KC_EXLM,  KC_AT,   KC_HASH, KC_DLR,  KC_PERC,                   KC_MINS, KC_LPRN, KC_PLUS, KC_RPRN, KC_EQL,  KC_BSLS,
-        KC_GRV,  KC_TILD,  KC_LT,   KC_GRV,  KC_GT,   _______, _______, _______, KC_AMPR, KC_LBRC, KC_UNDS, KC_RBRC, KC_PIPE, _______,
+        KC_GRV,  KC_TILD,  KC_LT,   KC_GRV,  KC_GT,   _______, SW_APP,  _______, KC_AMPR, KC_LBRC, KC_UNDS, KC_RBRC, KC_PIPE, _______,
                                     _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
@@ -83,11 +88,6 @@ void update_tri_layer_RGB(uint8_t layer1, uint8_t layer2, uint8_t layer3) {
     } else {
         layer_off(layer3);
     }
-}
-
-// Tri-state layer _FUNCTION - this seems to break everything
-layer_state_t layer_state_set_user(layer_state_t state) {
-   return update_tri_layer_state(state, _NAVNUM, _SYMBOLS, _FUNCTION);
 }
 
 // SSD1306 OLED update loop, make sure to enable OLED_DRIVER_ENABLE=yes in rules.mk
@@ -125,12 +125,52 @@ void oled_task_user(void) {
 }
 #endif  // OLED_DRIVER_ENABLE
 
+/****************************************************************************
+ **************************** MACROS ****************************************
+ ****************************************************************************/
+
+bool app_switcher_active = false;
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    // keylogger from lily58
     if (record->event.pressed) {
 #ifdef OLED_DRIVER_ENABLE
         set_keylog(keycode, record);
 #endif
-        // set_timelog();
     }
-    return true;
+
+    switch (keycode) {
+        // app and window switcher macros
+        case SW_APP:
+            if (!record->event.pressed) {
+                return false;
+            }
+
+            if (!app_switcher_active) {
+                app_switcher_active = true;
+                register_code(KC_LGUI); // to be unregistered on layer change
+            }
+            tap_code(KC_TAB);
+
+            return false;
+
+        case SW_WIND:
+            if (record->event.pressed) {
+                tap_code16(LGUI(KC_GRV));
+            }
+            return false;
+
+        default:
+            return true;
+    }
+}
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+    if (app_switcher_active && IS_LAYER_OFF_STATE(state, _SYMBOLS)) {
+        app_switcher_active = false;
+        unregister_code(KC_LGUI);
+    }
+
+    // Tri-state layer _FUNCTION (when both layers are enabled, the third layer is activated
+    return update_tri_layer_state(state, _NAVNUM, _SYMBOLS, _FUNCTION);
 }
