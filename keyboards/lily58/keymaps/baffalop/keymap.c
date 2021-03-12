@@ -1,4 +1,5 @@
 #include QMK_KEYBOARD_H
+#include "caps_word.h"
 
 #ifdef PROTOCOL_LUFA
 #    include "lufa.h"
@@ -9,6 +10,31 @@
 #endif
 
 extern uint8_t is_master;
+
+void tap_dance_shift(qk_tap_dance_state_t *state, void *user_data) {
+    switch (state->count) {
+        case 1:
+            if (is_caps_anything_enabled()) {
+                disable_caps_all();
+                break;
+            }
+            add_oneshot_mods(MOD_LSFT);
+            break;
+
+        case 2:
+            enable_caps_word();
+            break;
+
+        case 3:
+            enable_snake_case();
+            break;
+
+        case 4:
+            enable_screaming_snake_case();
+            break;
+
+    }
+}
 
 enum layer_number {
     _COLEMAK = 0,
@@ -21,6 +47,14 @@ enum layer_number {
 enum custom_keycodes {
     SW_APP = SAFE_RANGE,
     SW_WIND,
+};
+
+enum tap_dance_codes {
+    TD_SHIFT,
+};
+
+qk_tap_dance_action_t tap_dance_actions[] = {
+    [TD_SHIFT] = ACTION_TAP_DANCE_FN(tap_dance_shift),
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -125,9 +159,7 @@ void oled_task_user(void) {
 }
 #endif  // OLED_DRIVER_ENABLE
 
-/****************************************************************************
- **************************** MACROS ****************************************
- ****************************************************************************/
+// MACROS
 
 bool app_switcher_active = false;
 
@@ -137,6 +169,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef OLED_DRIVER_ENABLE
         set_keylog(keycode, record);
 #endif
+    }
+
+    if (!process_caps_word(keycode, record)) {
+        return false;
     }
 
     switch (keycode) {
