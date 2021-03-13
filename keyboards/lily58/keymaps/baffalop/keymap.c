@@ -1,5 +1,6 @@
 #include QMK_KEYBOARD_H
 #include "caps_word.h"
+#include "tap_dance_capsw_bspc.h"
 
 #ifdef PROTOCOL_LUFA
 #    include "lufa.h"
@@ -11,30 +12,6 @@
 
 extern uint8_t is_master;
 
-void tap_dance_shift(qk_tap_dance_state_t *state, void *user_data) {
-    switch (state->count) {
-        case 1:
-            if (is_caps_anything_enabled()) {
-                disable_caps_all();
-                break;
-            }
-            add_oneshot_mods(MOD_LSFT);
-            break;
-
-        case 2:
-            enable_caps_word();
-            break;
-
-        case 3:
-            enable_snake_case();
-            break;
-
-        case 4:
-            enable_screaming_snake_case();
-            break;
-
-    }
-}
 
 enum layer_number {
     _COLEMAK = 0,
@@ -50,17 +27,17 @@ enum custom_keycodes {
 };
 
 enum tap_dance_codes {
-    TD_SHIFT,
+    TD_CAPSW_BSPC,
 };
 
 qk_tap_dance_action_t tap_dance_actions[] = {
-    [TD_SHIFT] = ACTION_TAP_DANCE_FN(tap_dance_shift),
+    [TD_CAPSW_BSPC] = ACTION_TAP_DANCE_FN_ADVANCED(td_capsw_bspc_each_tap, td_capsw_bspc_finished, td_capsw_bspc_reset),
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /* COLEMAK
-     * ,-----------------------------------------.                    ,-----------------------------------------.
+    W * ,-----------------------------------------.                    ,-----------------------------------------.
      * | 0  |   1  |   2  |   3  |   4  |   5  |                      |  6  |   7  |   8  |   9  |   0  |  =   |
      * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
      * | Tab |   Q  |   W  |   C  |   P  |   B  |                     |   J  |   L  |   U  |   Y  |   /  |  -   |
@@ -69,17 +46,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------|   [   |    |    ]  |------+------+------+------+------+------|
      * |  [  |   Z  |   X  |   F  |   D  |   V  |-------|    |-------|   K  |   H  |   ,  |   .  |   ;  |  ]   |
      * `-----------------------------------------/       /     \      \-----------------------------------------'
-     *                   | Lang |  [   |  OS- | /Enter/ /       \Space/\  |BckSP/|  ]   |QWERTY|
-     *                   |      |      | SHIFT|/ SYM   /         \NAVNUM\ | Shift|      |      |
-     *                   `----------------------------'           '------''--------------------'
+     *                   | Lang |  [   |  OS- | /Enter/ /       \Space/\  |BckSP/        |  DEL |QWERTY|
+     *                   |      |      | SHIFT|/ SYM   /         \NAVNUM\ |tap dance caps|      |      |
+     *                   `----------------------------'           '------''---------------------'
      */
 
     [_COLEMAK] = LAYOUT(
-        KC_0,    KC_1,         KC_2,         KC_3,         KC_4,          KC_5,                             KC_6,    KC_7,            KC_8,         KC_9,         KC_0,         KC_BSPC,
-        KC_TAB,  KC_Q,         KC_W,         KC_C,         KC_P,          KC_B,                             KC_J,    KC_L,            KC_U,         KC_Y,         KC_SLSH,      KC_MINS,
-        KC_ESC,  LSFT_T(KC_A), LALT_T(KC_R), LCTL_T(KC_S), LGUI_T(KC_T),  KC_G,                             KC_M,    RGUI_T(KC_N),    RCTL_T(KC_E), RALT_T(KC_I), RSFT_T(KC_O), KC_QUOT,
-        KC_LBRC, KC_Z,         KC_X,         KC_F,         KC_D,          KC_V,        KC_LBRC, KC_RBRC,    KC_K,    KC_H,            KC_COMM,      KC_DOT,       KC_SCLN,      KC_RBRC,
-                               KC_CAPS,      KC_LBRC,      TD(TD_SHIFT),  LT(_SYMBOLS, KC_ENT), LT(_NAVNUM, KC_SPC), RSFT_T(KC_BSPC), KC_DEL,       TG(_QWERTY)
+        KC_0,    KC_1,         KC_2,         KC_3,         KC_4,           KC_5,                             KC_6,    KC_7,             KC_8,         KC_9,         KC_0,         KC_BSPC,
+        KC_TAB,  KC_Q,         KC_W,         KC_C,         KC_P,           KC_B,                             KC_J,    KC_L,             KC_U,         KC_Y,         KC_SLSH,      KC_MINS,
+        KC_ESC,  LSFT_T(KC_A), LALT_T(KC_R), LCTL_T(KC_S), LGUI_T(KC_T),   KC_G,                             KC_M,    RGUI_T(KC_N),     RCTL_T(KC_E), RALT_T(KC_I), RSFT_T(KC_O), KC_QUOT,
+        KC_LBRC, KC_Z,         KC_X,         KC_F,         KC_D,           KC_V,        KC_LBRC, KC_RBRC,    KC_K,    KC_H,             KC_COMM,      KC_DOT,       KC_SCLN,      KC_RBRC,
+                               KC_CAPS,      KC_LBRC,      OSM(MOD_LSFT),  LT(_SYMBOLS, KC_ENT), LT(_NAVNUM, KC_SPC), TD(TD_CAPSW_BSPC), KC_DEL,       TG(_QWERTY)
     ),
 
     [_QWERTY] = LAYOUT(
@@ -195,6 +172,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 tap_code16(LGUI(KC_GRV));
             }
             return false;
+
+        case OSM(MOD_LSFT):
+            if (is_caps_anything_enabled()) {
+                disable_caps_all();
+            }
 
         default:
             return true;

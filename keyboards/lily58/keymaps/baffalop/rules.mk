@@ -21,7 +21,8 @@ TAP_DANCE_ENABLE = yes
 # Do not enable SLEEP_LED_ENABLE. it uses the same timer as BACKLIGHT_ENABLE
 SLEEP_LED_ENABLE = no    # Breathing sleep LED during USB suspend
 
-SRC += caps_word.c
+SRC += caps_word.c \
+	   tap_dance_capsw_bspc.c
 
 # If you want to change the display of OLED, you need to change here
 SRC +=  ./lib/rgb_state_reader.c \
