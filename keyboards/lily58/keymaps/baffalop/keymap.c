@@ -31,13 +31,13 @@ enum tap_dance_codes {
 };
 
 qk_tap_dance_action_t tap_dance_actions[] = {
-    [TD_CAPSW_BSPC] = ACTION_TAP_DANCE_FN_ADVANCED(td_capsw_bspc_each_tap, td_capsw_bspc_finished, NULL),
+    [TD_CAPSW_BSPC] = ACTION_TAP_DANCE_FN_ADVANCED(td_capsw_bspc_each, td_capsw_bspc_finished, NULL),
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /* COLEMAK
-    W * ,-----------------------------------------.                    ,-----------------------------------------.
+     * ,-----------------------------------------.                    ,-----------------------------------------.
      * | 0  |   1  |   2  |   3  |   4  |   5  |                      |  6  |   7  |   8  |   9  |   0  |  =   |
      * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
      * | Tab |   Q  |   W  |   C  |   P  |   B  |                     |   J  |   L  |   U  |   Y  |   /  |  -   |

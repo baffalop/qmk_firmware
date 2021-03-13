@@ -38,7 +38,7 @@ uint8_t cur_dance(qk_tap_dance_state_t *state) {
     return TRIPLE_TAP;
 }
 
-void td_capsw_bspc_each_tap(qk_tap_dance_state_t *state, void *user_data) {
+void td_capsw_bspc_each(qk_tap_dance_state_t *state, void *user_data) {
     switch (cur_dance(state)) {
         // ensure shift is registered immediately on first keydown, then unregistered when necessary
         case RAW_TAP:
