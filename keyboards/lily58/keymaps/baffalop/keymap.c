@@ -31,7 +31,7 @@ enum tap_dance_codes {
 };
 
 qk_tap_dance_action_t tap_dance_actions[] = {
-    [TD_CAPSW_BSPC] = ACTION_TAP_DANCE_FN_ADVANCED(td_capsw_bspc_each_tap, td_capsw_bspc_finished, td_capsw_bspc_reset),
+    [TD_CAPSW_BSPC] = ACTION_TAP_DANCE_FN_ADVANCED(td_capsw_bspc_each_tap, td_capsw_bspc_finished, NULL),
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -176,8 +176,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case OSM(MOD_LSFT):
             if (is_caps_anything_enabled()) {
                 disable_caps_all();
+                return false;
             }
-
+            
         default:
             return true;
     }

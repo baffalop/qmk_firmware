@@ -41,7 +41,7 @@ uint8_t cur_dance(qk_tap_dance_state_t *state) {
 void td_capsw_bspc_each_tap(qk_tap_dance_state_t *state, void *user_data) {
     switch (cur_dance(state)) {
         // ensure shift is registered immediately on first keydown, then unregistered when necessary
-        case RAW_HOLD:
+        case RAW_TAP:
             tap_code(KC_BSPC);
             break;
     }
@@ -62,8 +62,4 @@ void td_capsw_bspc_finished(qk_tap_dance_state_t *state, void *user_data) {
             clear_oneshot_mods();
             break;
     }
-}
-
-void td_capsw_bspc_reset(qk_tap_dance_state_t *state, void *user_data) {
-    unregister_code16(KC_RSFT);
 }
