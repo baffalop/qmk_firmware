@@ -69,7 +69,7 @@ bool process_caps_word(uint16_t keycode, keyrecord_t *record) {
 
     /* Return value determines if processing the keycode should continue to core code.
      * This allows more customizability. */
-    if(caps_word_enabled || snake_case_enabled) {
+    if (caps_word_enabled || snake_case_enabled) {
         // first strip of the mod taps and layer taps if needed
         switch (keycode) {
             case QK_MOD_TAP ... QK_MOD_TAP_MAX:
