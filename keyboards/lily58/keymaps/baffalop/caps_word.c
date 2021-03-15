@@ -139,9 +139,7 @@ bool process_caps_word(uint16_t keycode, keyrecord_t *record) {
             }
         case KC_ESC:
         case KC_ENT:
-            if (record->event.pressed) {
-                disable_all();
-            }
+            disable_all();
             return true;
         case KC_A ... KC_0:
             if (is_awaiting_separator()) {
