@@ -5,12 +5,13 @@
 // Only activate the tap dance when oneshot shift is activated
 // RAW_TAP is for any taps when OSS is not active - to be handled as RSFT_T(KC_BSPC)
 enum tap_state {
-    RAW_TAP = 1,
-    SINGLE_HOLD,
+    RAW_HOLD = 1,
+    RAW_TAP,
     SINGLE_TAP,
     DOUBLE_TAP,
-    TRIPLE_TAP,
 };
+
+static uint8_t tap_state = 0;
 
 bool is_lshift_on(void) {
     return get_mods() & MOD_BIT(KC_LSFT)
@@ -19,28 +20,26 @@ bool is_lshift_on(void) {
 
 uint8_t cur_dance(qk_tap_dance_state_t *state) {
     if (!is_lshift_on()) {
-        return RAW_TAP;
+        if (!state->interrupted && state->pressed)
+            return RAW_HOLD;
+        else
+            return RAW_TAP;
     }
 
-    if (state->count == 1) {
-        if (state->pressed)
-            return SINGLE_HOLD;
-        else {
-            return SINGLE_TAP;
-        }
-    } else {
-        switch (state->count) {
-            case 2: return DOUBLE_TAP;
-            case 3: return TRIPLE_TAP;
-        }
+    switch (state->count) {
+        case 1: return SINGLE_TAP;
+        case 2: return DOUBLE_TAP;
     }
 
-    return TRIPLE_TAP;
+    return DOUBLE_TAP;
 }
 
 void td_capsw_bspc_each(qk_tap_dance_state_t *state, void *user_data) {
     switch (cur_dance(state)) {
-        // ensure shift is registered immediately on first keydown, then unregistered when necessary
+        case RAW_HOLD:
+            /* register_mods(MOD_BIT(KC_RSFT)); */
+            tap_code(KC_BSPC);
+            break;
         case RAW_TAP:
             tap_code(KC_BSPC);
             break;
@@ -48,18 +47,26 @@ void td_capsw_bspc_each(qk_tap_dance_state_t *state, void *user_data) {
 }
 
 void td_capsw_bspc_finished(qk_tap_dance_state_t *state, void *user_data) {
-    switch (cur_dance(state)) {
+    tap_state = cur_dance(state);
+    switch (tap_state) {
+        case RAW_HOLD:
+            register_mods(MOD_BIT(KC_RSFT));
+            break;
         case SINGLE_TAP:
-            enable_caps_word();
+            enable_screaming_x_case();
             clear_oneshot_mods();
             break;
         case DOUBLE_TAP:
-            enable_snake_case();
-            clear_oneshot_mods();
-            break;
-        case TRIPLE_TAP:
-            enable_screaming_snake_case();
+            enable_x_case();
             clear_oneshot_mods();
             break;
     }
+}
+
+void td_capsw_bspc_reset(qk_tap_dance_state_t *state, void *user_data) {
+    switch (tap_state) {
+        case RAW_HOLD:
+            unregister_mods(MOD_BIT(KC_RSFT));
+    }
+    tap_state = 0;
 }

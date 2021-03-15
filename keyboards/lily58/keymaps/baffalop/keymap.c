@@ -212,7 +212,7 @@ void td_comm_q(qk_tap_dance_state_t *state, void *user_data) {
 }
 
 qk_tap_dance_action_t tap_dance_actions[] = {
-    [TD_CAPSW_BSPC] = ACTION_TAP_DANCE_FN_ADVANCED(td_capsw_bspc_each, td_capsw_bspc_finished, NULL),
+    [TD_CAPSW_BSPC] = ACTION_TAP_DANCE_FN_ADVANCED(td_capsw_bspc_each, td_capsw_bspc_finished, td_capsw_bspc_reset),
     [TD_COMM_Q] = ACTION_TAP_DANCE_FN(td_comm_q),
 };
 
