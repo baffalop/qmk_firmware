@@ -2,10 +2,11 @@
 #include <stdbool.h>
 #include "caps_word.h"
 
-/* This particular implementation is by @baffalop at splitkb.com discord, building on work by @dnaq.
+/* This particular implementation is by @baffalop at splitkb.com discord.
  * Idea originally from @iaap, also at splitkb.com discord.
  * Modified by @sevanteri (added underscores on spaces)
  * Modified by @metheon (added ability to toggle between states)
+ * Modified by @dnaq (added snake_case and SCREAMING_SNAKE_CASE)
  */
 
 #define DEFAULT_SEPARATOR KC_UNDS
