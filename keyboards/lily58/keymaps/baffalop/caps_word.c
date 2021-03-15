@@ -130,27 +130,20 @@ bool process_caps_word(uint16_t keycode, keyrecord_t *record) {
     last_press_was_space = false;
 
     switch (keycode) {
-        case KC_DOT:
-        case KC_COMM:
-        case KC_TAB:
-            if (is_awaiting_separator()) {
-                resolve_separator(keycode);
-                return false;
-            }
-        case KC_ESC:
-        case KC_ENT:
-            disable_all();
-            return true;
         case KC_A ... KC_0:
+        case KC_QUOT:
             if (is_awaiting_separator()) {
                 resolve_separator_default();
             }
             return true;
+
         default:
             if (is_awaiting_separator()) {
                 resolve_separator(keycode);
                 return false;
             }
+            disable_all();
+            return true;
     }
 
     return true;
