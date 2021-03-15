@@ -2,27 +2,35 @@
 #include <stdbool.h>
 #include "caps_word.h"
 
-// This particular implementation is by @dnaq at splitkb.com discord.
-// Idea originally from @iaap, also at splitkb.com discord.
-// Modified by @sevanteri (added underscores on spaces)
-// Modified by @metheon (added ability to toggle between states)
-
-// These two bools produces four states:
-// if both false the features is turned off
-// if caps word is true then CAPITALIZE next word
-// if snake case enabled then_replace_spaces_with_underscores
-// if both true THEN_SCREAMING_SNAKE_CASE_ALL_TEXT
+/* This particular implementation is by @baffalop at splitkb.com discord, building on work by @dnaq.
+ * Idea originally from @iaap, also at splitkb.com discord.
+ * Modified by @sevanteri (added underscores on spaces)
+ * Modified by @metheon (added ability to toggle between states)
+ */
 
 #define DEFAULT_SEPARATOR KC_UNDS
 
 enum x_case_state {
     X_CASE_DISABLED,
-    AWAITING_SEPARATOR,
+    AWAITING_SEPARATOR, 
     X_CASE_ACTIVE,
 };
 
+/* These two variables produce four states:
+ *
+ * - if both false the features is turned off
+ * - if caps word is true then CAPITALIZE next word
+ * - if x-case enabled then replace spaces with separator
+ *     - default separator is underscore, for snake_case
+ *     - if first keypress after enabling x-case is non-alphanumeric,
+ *       this will be set as the separator
+ *     - double space or non-word keycode to break out
+ * - if both true THEN_SCREAMING_SNAKE_CASE_ALL_TEXT
+ */
+
 static bool caps_word_enabled = false;
 static uint8_t x_case_state = X_CASE_DISABLED;
+
 static uint16_t separator = DEFAULT_SEPARATOR;
 
 void enable_caps_word(void) {
