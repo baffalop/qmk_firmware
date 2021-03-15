@@ -88,6 +88,7 @@ void apply_separator(void) {
 }
 
 bool process_caps_word(uint16_t keycode, keyrecord_t *record) {
+    // for tracking douple space to get out of x-case
     static bool last_press_was_space = false;
 
     /* Return value determines if processing the keycode should continue to core code.
@@ -96,6 +97,7 @@ bool process_caps_word(uint16_t keycode, keyrecord_t *record) {
         return true;
     }
 
+    // we're only interested in presses (for now)
     if (!record->event.pressed) {
         return true;
     }
@@ -109,7 +111,7 @@ bool process_caps_word(uint16_t keycode, keyrecord_t *record) {
             keycode = keycode & 0xFF;
     }
 
-    // we end caps word on one of the following keypresses
+    // special handing for spaces
     if (keycode == KC_SPC) {
         if (is_awaiting_separator()) {
             resolve_separator_default();
@@ -130,6 +132,14 @@ bool process_caps_word(uint16_t keycode, keyrecord_t *record) {
     last_press_was_space = false;
 
     switch (keycode) {
+        // the following keycodes are considered 'part of a word': caps word continues
+        // they also will not be counted as the separator: if the first press is one of these,
+        // use the default separator
+        case KC_BSPC:
+        case KC_DEL:
+        case KC_LEFT:
+        case KC_RIGHT:
+            return true;
         case KC_A ... KC_0:
         case KC_QUOT:
             if (is_awaiting_separator()) {
@@ -137,6 +147,8 @@ bool process_caps_word(uint16_t keycode, keyrecord_t *record) {
             }
             return true;
 
+        // any keycode other than the 'word' ones can be defined as the separator for x-case
+        // otherwise, they will break you out of caps word/x-case
         default:
             if (is_awaiting_separator()) {
                 resolve_separator(keycode);
