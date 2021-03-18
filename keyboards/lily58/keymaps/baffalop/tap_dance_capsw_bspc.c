@@ -1,6 +1,6 @@
 #include "quantum.h"
 #include "process_keycode/process_tap_dance.h"
-#include "caps_word.h"
+#include "casemodes.h"
 
 // Only activate the tap dance when oneshot shift is activated
 // RAW_TAP is for any taps when OSS is not active - to be handled as RSFT_T(KC_BSPC)
@@ -53,11 +53,12 @@ void td_capsw_bspc_finished(qk_tap_dance_state_t *state, void *user_data) {
             register_mods(MOD_BIT(KC_RSFT));
             break;
         case SINGLE_TAP:
-            enable_screaming_x_case();
             clear_oneshot_mods();
+            enable_caps_word();
+            enable_xcase();
             break;
         case DOUBLE_TAP:
-            enable_x_case();
+            enable_xcase();
             clear_oneshot_mods();
             break;
     }

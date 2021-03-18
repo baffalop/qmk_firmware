@@ -1,5 +1,5 @@
 #include QMK_KEYBOARD_H
-#include "caps_word.h"
+#include "casemodes.h"
 #include "tap_dance_capsw_bspc.h"
 
 #ifdef PROTOCOL_LUFA
@@ -145,6 +145,16 @@ void oled_task_user(void) {
 
 bool app_switcher_active = false;
 
+// overriding function in casemodes.c
+bool use_default_xcase_separator(uint16_t keycode, const keyrecord_t *record) {
+    switch (keycode) { 
+        case KC_A ... KC_Z: 
+        case KC_1 ... KC_0: 
+            return true; 
+    } 
+    return false;
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // keylogger from lily58
     if (record->event.pressed) {
@@ -153,7 +163,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #endif
     }
 
-    if (!process_caps_word(keycode, record)) {
+    if (!process_case_modes(keycode, record)) {
         return false;
     }
 
@@ -179,8 +189,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
 
         case OSM(MOD_LSFT):
-            if (is_caps_anything_enabled()) {
-                disable_caps_all();
+            if (xcase_enabled() || caps_word_enabled()) {
+                disable_xcase();
+                disable_caps_word();
                 return false;
             }
             
