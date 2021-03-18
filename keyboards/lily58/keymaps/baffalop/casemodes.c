@@ -211,77 +211,80 @@ bool process_case_modes(uint16_t keycode, const keyrecord_t *record) {
                 // this catches the OSM release if no other key was pressed
                 set_oneshot_mods(0);
                 enable_xcase_with(keycode);
+                return false;
             }
             // let other special keys go through
             return true;
         }
     }
 
-    if (caps_word_on || xcase_state) {
-        // Get the base keycode of a mod or layer tap key
-        switch (keycode) {
-            case QK_MOD_TAP ... QK_MOD_TAP_MAX:
-            case QK_LAYER_TAP ... QK_LAYER_TAP_MAX:
-            case QK_TAP_DANCE ... QK_TAP_DANCE_MAX:
-                // Earlier return if this has not been considered tapped yet
-                if (record->tap.count == 0)
-                    return true;
-                keycode = keycode & 0xFF;
-                break;
-            default:
-                break;
-        }
-
-        if (record->event.pressed) {
-            // handle xcase mode
-            if (xcase_state == XCASE_ON) {
-                // place the delimiter if space is tapped
-                if (keycode == KC_SPACE) {
-                    if (distance_to_last_delim != 0) {
-                        place_delimiter();
-                        distance_to_last_delim = 0;
-                        return false;
-                    }
-                    // remove the delimiter and disable modes
-                    else {
-                        remove_delimiter();
-                        disable_xcase();
-                        disable_caps_word();
-                        return true;
-                    }
-                }
-                // decrement distance to delimiter on back space
-                else if (keycode == KC_BSPC) {
-                    --distance_to_last_delim;
-                }
-                // don't increment distance to last delim if negative
-                else if (distance_to_last_delim >= 0) {
-                    // puts back a one shot delimiter if you we're back to the delimiter pos
-                    if (distance_to_last_delim == 0 &&
-                        (IS_OSM(xcase_delimiter))) {
-                        place_delimiter();
-                    }
-                    ++distance_to_last_delim;
-                }
-
-            } // end XCASE_ON
-
-            // check if the case modes have been terminated
-            if (terminate_case_modes(keycode, record)) {
-                disable_caps_word();
-                disable_xcase();
-            }
-
-#ifdef CAPSWORD_USE_SHIFT
-            else if (keycode >= KC_A && keycode <= KC_Z){
-                tap_code16(LSFT(keycode));
-                return false;
-            }
-#endif
-
-        } // end if event.pressed
-
+    if (!caps_word_on && xcase_state == XCASE_OFF) {
         return true;
     }
+
+    if (!record->event.pressed) {
+        return true;
+    }
+
+    // Get the base keycode of a mod or layer tap key
+    switch (keycode) {
+        case QK_MOD_TAP ... QK_MOD_TAP_MAX:
+        case QK_LAYER_TAP ... QK_LAYER_TAP_MAX:
+        case QK_TAP_DANCE ... QK_TAP_DANCE_MAX:
+            // Earlier return if this has not been considered tapped yet
+            if (record->tap.count == 0)
+                return true;
+            keycode = keycode & 0xFF;
+            break;
+        default:
+            break;
+    }
+
+    // handle xcase mode
+    if (xcase_state == XCASE_ON) {
+        // place the delimiter if space is tapped
+        if (keycode == KC_SPACE) {
+            if (distance_to_last_delim != 0) {
+                place_delimiter();
+                distance_to_last_delim = 0;
+                return false;
+            }
+            // remove the delimiter and disable modes
+            else {
+                remove_delimiter();
+                disable_xcase();
+                disable_caps_word();
+                return true;
+            }
+        }
+        // decrement distance to delimiter on back space
+        else if (keycode == KC_BSPC) {
+            --distance_to_last_delim;
+        }
+        // don't increment distance to last delim if negative
+        else if (distance_to_last_delim >= 0) {
+            // puts back a one shot delimiter if you we're back to the delimiter pos
+            if (distance_to_last_delim == 0 &&
+                    (IS_OSM(xcase_delimiter))) {
+                place_delimiter();
+            }
+            ++distance_to_last_delim;
+        }
+
+    } // end XCASE_ON
+
+    // check if the case modes have been terminated
+    if (terminate_case_modes(keycode, record)) {
+        disable_caps_word();
+        disable_xcase();
+    }
+
+#ifdef CAPSWORD_USE_SHIFT
+    else if (keycode >= KC_A && keycode <= KC_Z){
+        tap_code16(LSFT(keycode));
+        return false;
+    }
+#endif
+
     return true;
 }
