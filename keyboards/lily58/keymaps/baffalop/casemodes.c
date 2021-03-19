@@ -187,6 +187,20 @@ bool use_default_xcase_separator(uint16_t keycode, const keyrecord_t *record) {
 }
 
 bool process_case_modes(uint16_t keycode, const keyrecord_t *record) {
+    // Get the base keycode of a mod or layer tap key
+    switch (keycode) {
+        case QK_MOD_TAP ... QK_MOD_TAP_MAX:
+        case QK_LAYER_TAP ... QK_LAYER_TAP_MAX:
+        case QK_TAP_DANCE ... QK_TAP_DANCE_MAX:
+            // Earlier return if this has not been considered tapped yet
+            if (record->tap.count == 0)
+                return true;
+            keycode = keycode & 0xFF;
+            break;
+        default:
+            break;
+    }
+
     if (xcase_state == XCASE_WAIT) {
         // grab the next input to be the delimiter
         if (use_default_xcase_separator(keycode, record)) {
@@ -224,20 +238,6 @@ bool process_case_modes(uint16_t keycode, const keyrecord_t *record) {
 
     if (!record->event.pressed) {
         return true;
-    }
-
-    // Get the base keycode of a mod or layer tap key
-    switch (keycode) {
-        case QK_MOD_TAP ... QK_MOD_TAP_MAX:
-        case QK_LAYER_TAP ... QK_LAYER_TAP_MAX:
-        case QK_TAP_DANCE ... QK_TAP_DANCE_MAX:
-            // Earlier return if this has not been considered tapped yet
-            if (record->tap.count == 0)
-                return true;
-            keycode = keycode & 0xFF;
-            break;
-        default:
-            break;
     }
 
     // handle xcase mode
