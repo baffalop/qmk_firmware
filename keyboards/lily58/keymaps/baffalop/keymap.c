@@ -163,6 +163,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #endif
     }
 
+    bool case_modes_were_on = case_modes_enabled();
+
     if (!process_case_modes(keycode, record)) {
         return false;
     }
@@ -189,9 +191,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
 
         case OSM(MOD_LSFT):
-            if (xcase_enabled() || caps_word_enabled()) {
-                disable_xcase();
-                disable_caps_word();
+            if (case_modes_were_on) {
                 return false;
             }
             

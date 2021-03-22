@@ -22,5 +22,8 @@ void enable_xcase_with(uint16_t delimiter);
 // Disable xcase
 void disable_xcase(void);
 
+// either caps word or xcase are on
+bool case_modes_enabled(void);
+
 // Function to be put in process user
 bool process_case_modes(uint16_t keycode, const keyrecord_t *record);

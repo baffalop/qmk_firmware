@@ -97,12 +97,16 @@ void toggle_caps_word(void) {
 
 // Check whether xcase is on
 bool xcase_enabled(void) {
-    return xcase_state == XCASE_ON;
+    return xcase_state > XCASE_OFF;
 }
 
 // Check whether xcase is waiting for a keypress
 bool xcase_waiting(void) {
     return xcase_state == XCASE_WAIT;
+}
+
+bool case_modes_enabled(void) {
+    return caps_word_enabled() || xcase_enabled();
 }
 
 // Enable xcase and pickup the next keystroke as the delimiter
@@ -163,13 +167,15 @@ bool terminate_case_modes(uint16_t keycode, const keyrecord_t *record) {
                 if (record->event.pressed && (get_mods() != 0)) {
                     return true;
                 }
-                break;
+                return false;
+
             default:
                 if (record->event.pressed) {
                     return true;
                 }
                 break;
         }
+
         return false;
 }
 
@@ -232,7 +238,7 @@ bool process_case_modes(uint16_t keycode, const keyrecord_t *record) {
         }
     }
 
-    if (!caps_word_on && xcase_state == XCASE_OFF) {
+    if (!case_modes_enabled()) {
         return true;
     }
 
