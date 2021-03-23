@@ -28,14 +28,19 @@ enum custom_keycodes {
 
 enum tap_dance_codes {
     TD_CAPSW_BSPC,
-    TD_COMM_Q,
+};
+
+enum combos {
+    COMM_DOT_Q,
+};
+
+const uint16_t PROGMEM comm_dot_combo[] = {KC_COMM, KC_DOT, COMBO_END};
+
+combo_t key_combos[COMBO_COUNT] = {
+    [COMM_DOT_Q] = COMBO_ACTION(comm_dot_combo),
 };
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case TD(TD_COMM_Q):
-            return 150;
-    }
     return 165;
 }
 
@@ -57,11 +62,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
 
     [_COLEMAK] = LAYOUT(
-        KC_0,   KC_1,         KC_2,         KC_3,         KC_4,           KC_5,                             KC_6,    KC_7,              KC_8,          KC_9,         KC_0,         KC_BSPC,
-        KC_TAB, KC_Q,         KC_W,         KC_C,         KC_P,           KC_B,                             KC_J,    KC_L,              KC_U,          KC_Y,         KC_SLSH,      KC_MINS,
-        KC_ESC, LSFT_T(KC_A), LALT_T(KC_R), LCTL_T(KC_S), LGUI_T(KC_T),   KC_G,                             KC_M,    RGUI_T(KC_N),      RCTL_T(KC_E),  RALT_T(KC_I), RSFT_T(KC_O), KC_QUOT,
-        KC_GRV, KC_Z,         KC_X,         KC_F,         KC_D,           KC_V,        KC_LBRC, KC_RBRC,    KC_K,    KC_H,              TD(TD_COMM_Q), KC_DOT,       KC_SCLN,      KC_BSLS,
-                               KC_CAPS,      KC_LBRC,      OSM(MOD_LSFT),  LT(_SYMBOLS, KC_ENT), LT(_NAVNUM, KC_SPC), TD(TD_CAPSW_BSPC), KC_RBRC,       TG(_QWERTY)
+        KC_0,   KC_1,         KC_2,         KC_3,         KC_4,           KC_5,                             KC_6,    KC_7,              KC_8,         KC_9,         KC_0,         KC_BSPC,
+        KC_TAB, KC_Q,         KC_W,         KC_C,         KC_P,           KC_B,                             KC_J,    KC_L,              KC_U,         KC_Y,         KC_SLSH,      KC_MINS,
+        KC_ESC, LSFT_T(KC_A), LALT_T(KC_R), LCTL_T(KC_S), LGUI_T(KC_T),   KC_G,                             KC_M,    RGUI_T(KC_N),      RCTL_T(KC_E), RALT_T(KC_I), RSFT_T(KC_O), KC_QUOT,
+        KC_GRV, KC_Z,         KC_X,         KC_F,         KC_D,           KC_V,        KC_LBRC, KC_RBRC,    KC_K,    KC_H,              KC_COMM,      KC_DOT,       KC_SCLN,      KC_BSLS,
+                               KC_CAPS,      KC_LBRC,      OSM(MOD_LSFT),  LT(_SYMBOLS, KC_ENT), LT(_NAVNUM, KC_SPC), TD(TD_CAPSW_BSPC), KC_RBRC,  TG(_QWERTY)
     ),
 
     [_QWERTY] = LAYOUT(
@@ -210,20 +215,16 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     return update_tri_layer_state(state, _NAVNUM, _SYMBOLS, _FUNCTION);
 }
 
-// tap dance: comma on single, question mark on double
-void td_comm_q(qk_tap_dance_state_t *state, void *user_data) {
-    switch (state->count) {
-        case 1:
-            tap_code(KC_COMM);
-            break;
-        case 2:
-            tap_code16(KC_QUES);
+qk_tap_dance_action_t tap_dance_actions[] = {
+    [TD_CAPSW_BSPC] = ACTION_TAP_DANCE_FN_ADVANCED(td_capsw_bspc_each, td_capsw_bspc_finished, td_capsw_bspc_reset),
+};
+
+void process_combo_event(uint16_t combo_index, bool pressed) {
+    switch (combo_index) {
+        case COMM_DOT_Q:
+            if (pressed) {
+                tap_code16(KC_QUES);
+            }
             break;
     }
 }
-
-qk_tap_dance_action_t tap_dance_actions[] = {
-    [TD_CAPSW_BSPC] = ACTION_TAP_DANCE_FN_ADVANCED(td_capsw_bspc_each, td_capsw_bspc_finished, td_capsw_bspc_reset),
-    [TD_COMM_Q] = ACTION_TAP_DANCE_FN(td_comm_q),
-};
-
