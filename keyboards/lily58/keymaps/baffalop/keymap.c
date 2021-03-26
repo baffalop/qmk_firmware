@@ -53,6 +53,14 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     return 165;
 }
 
+bool get_hold_on_other_keypress(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode & 0xFF) {
+        case KC_SPC:
+            return false;
+    }
+    return true;
+}
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /* COLEMAK

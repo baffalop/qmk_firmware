@@ -34,6 +34,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define TAPPING_FORCE_HOLD
 #define IGNORE_MOD_TAP_INTERRUPT
+#define HOLD_ON_OTHER_KEYPRESS_PER_KEY
 #define PERMISSIVE_HOLD
 #define TAPPING_TERM_PER_KEY
 
