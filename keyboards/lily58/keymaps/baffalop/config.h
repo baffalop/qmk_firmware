@@ -37,7 +37,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define PERMISSIVE_HOLD
 #define TAPPING_TERM_PER_KEY
 
-#define COMBO_COUNT 1
+#define COMBO_COUNT 5
 #define COMBO_TERM 80
 
 #undef RGBLED_NUM

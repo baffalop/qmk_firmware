@@ -30,14 +30,23 @@ enum tap_dance_codes {
     TD_CAPSW_BSPC,
 };
 
-enum combos {
-    COMM_DOT_Q,
-};
-
+// right hand combos
 const uint16_t PROGMEM comm_dot_combo[] = {KC_COMM, KC_DOT, COMBO_END};
+const uint16_t PROGMEM h_comm_combo[] = {KC_H, KC_COMM, COMBO_END};
+const uint16_t PROGMEM h_scln_combo[] = {KC_H, KC_SCLN, COMBO_END};
+const uint16_t PROGMEM dot_scln_combo[] = {KC_DOT, KC_SCLN, COMBO_END};
+
+// left hand combos
+const uint16_t PROGMEM x_f_combo[] = {KC_X, KC_F, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
-    [COMM_DOT_Q] = COMBO_ACTION(comm_dot_combo),
+    // right hand combos
+    COMBO(h_comm_combo, KC_LBRC),
+    COMBO(comm_dot_combo, KC_QUES),
+    COMBO(dot_scln_combo, KC_RBRC),
+    COMBO(h_scln_combo, KC_MINS),
+    // left hand combos
+    COMBO(x_f_combo, KC_GRV),
 };
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
@@ -218,13 +227,3 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_CAPSW_BSPC] = ACTION_TAP_DANCE_FN_ADVANCED(td_capsw_bspc_each, td_capsw_bspc_finished, td_capsw_bspc_reset),
 };
-
-void process_combo_event(uint16_t combo_index, bool pressed) {
-    switch (combo_index) {
-        case COMM_DOT_Q:
-            if (pressed) {
-                tap_code16(KC_QUES);
-            }
-            break;
-    }
-}
