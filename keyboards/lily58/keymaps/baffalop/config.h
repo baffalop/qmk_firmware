@@ -38,14 +38,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define PERMISSIVE_HOLD
 #define TAPPING_TERM_PER_KEY
 
-#define COMBO_COUNT 5
-#define COMBO_TERM 80
+#define COMBO_COUNT 19
+#define COMBO_TERM 30
+#define COMBO_MUST_TAP_PER_COMBO
 
 #undef RGBLED_NUM
 #define RGBLED_NUM 6
 #define RGBLIGHT_SPLIT { 3, 3 }
 #define RGBLIGHT_DEFAULT_HUE 58
-#define RGBLIGHT_DEFAULT_MODE RGBLIGHT_MODE_RAINBOW_MOOD
 #define RGBLIGHT_LIMIT_VAL 120
 #define RGBLIGHT_HUE_STEP 10
 #define RGBLIGHT_SAT_STEP 17
