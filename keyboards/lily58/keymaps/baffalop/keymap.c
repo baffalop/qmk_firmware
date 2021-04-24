@@ -41,6 +41,7 @@ const uint16_t PROGMEM combo_e_i_o[]         = { RCTL_T(KC_E), RALT_T(KC_I), RSF
 const uint16_t PROGMEM combo_i_o[]           = { RALT_T(KC_I), RSFT_T(KC_O), COMBO_END };
 const uint16_t PROGMEM combo_n_i[]           = { RGUI_T(KC_N), RALT_T(KC_I), COMBO_END };
 const uint16_t PROGMEM combo_e_o[]           = { RCTL_T(KC_E), RSFT_T(KC_O), COMBO_END };
+const uint16_t PROGMEM combo_n_o[]           = { RGUI_T(KC_N), RSFT_T(KC_O), COMBO_END };
 const uint16_t PROGMEM combo_h_e[]           = { KC_H,         RCTL_T(KC_E), COMBO_END };
 const uint16_t PROGMEM combo_e_dot[]         = { RCTL_T(KC_E), KC_DOT,       COMBO_END };
 const uint16_t PROGMEM combo_l_u[]           = { KC_L,         KC_U,         COMBO_END };
@@ -55,12 +56,14 @@ const uint16_t PROGMEM combo_a_t[] = { LSFT_T(KC_A), LGUI_T(KC_T), COMBO_END };
 const uint16_t PROGMEM combo_r_t[] = { LALT_T(KC_R), LGUI_T(KC_T), COMBO_END };
 
 enum combo_actions {
+    COMBO_ACTION_EMDASH,
     COMBO_ACTION_CAPS,
     COMBO_ACTION_XCASE,
 };
 
 combo_t key_combos[COMBO_COUNT] = {
     // actions
+    [COMBO_ACTION_EMDASH] = COMBO_ACTION(combo_n_o),
     [COMBO_ACTION_CAPS] = COMBO_ACTION(combo_h_comm_dot),
     [COMBO_ACTION_XCASE] = COMBO_ACTION(combo_comm_dot_scln),
     // right hand combos
@@ -88,6 +91,12 @@ combo_t key_combos[COMBO_COUNT] = {
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
     switch (combo_index) {
+        case COMBO_ACTION_EMDASH:
+            if (pressed) {
+                tap_code16(LSA(KC_MINS));
+            }
+            break;
+
         case COMBO_ACTION_CAPS:
             if (pressed) {
                 enable_caps_word();
