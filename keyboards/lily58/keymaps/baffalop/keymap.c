@@ -1,6 +1,5 @@
 #include QMK_KEYBOARD_H
 #include "casemodes.h"
-#include "tap_dance_capsw_bspc.h"
 
 #ifdef PROTOCOL_LUFA
 #    include "lufa.h"
@@ -26,28 +25,26 @@ enum custom_keycodes {
     SW_WIND,
 };
 
-enum tap_dance_codes {
-    TD_CAPSW_BSPC,
-};
-
 // right hand combos
-const uint16_t PROGMEM combo_comm_dot[]  = { KC_COMM,      KC_DOT,       COMBO_END };
-const uint16_t PROGMEM combo_h_comm[]    = { KC_H,         KC_COMM,      COMBO_END };
-const uint16_t PROGMEM combo_h_dot[]     = { KC_H,         KC_DOT,       COMBO_END };
-const uint16_t PROGMEM combo_h_scln[]    = { KC_H,         KC_SCLN,      COMBO_END };
-const uint16_t PROGMEM combo_comm_scln[] = { KC_COMM,      KC_SCLN,      COMBO_END };
-const uint16_t PROGMEM combo_dot_scln[]  = { KC_DOT,       KC_SCLN,      COMBO_END };
-const uint16_t PROGMEM combo_n_e[]       = { RGUI_T(KC_N), RCTL_T(KC_E), COMBO_END };
-const uint16_t PROGMEM combo_e_i[]       = { RCTL_T(KC_E), RALT_T(KC_I), COMBO_END };
-const uint16_t PROGMEM combo_n_e_i[]     = { RGUI_T(KC_N), RCTL_T(KC_E), RALT_T(KC_I), COMBO_END };
-const uint16_t PROGMEM combo_e_i_o[]     = { RCTL_T(KC_E), RALT_T(KC_I), RSFT_T(KC_O), COMBO_END };
-const uint16_t PROGMEM combo_i_o[]       = { RALT_T(KC_I), RSFT_T(KC_O), COMBO_END };
-const uint16_t PROGMEM combo_n_i[]       = { RGUI_T(KC_N), RALT_T(KC_I), COMBO_END };
-const uint16_t PROGMEM combo_e_o[]       = { RCTL_T(KC_E), RSFT_T(KC_O), COMBO_END };
-const uint16_t PROGMEM combo_h_e[]       = { KC_H,         RCTL_T(KC_E), COMBO_END };
-const uint16_t PROGMEM combo_e_dot[]     = { RCTL_T(KC_E), KC_DOT,       COMBO_END };
-const uint16_t PROGMEM combo_l_u[]       = { KC_L,         KC_U,         COMBO_END };
-const uint16_t PROGMEM combo_u_y[]       = { KC_U,         KC_Y,         COMBO_END };
+const uint16_t PROGMEM combo_comm_dot[]      = { KC_COMM,      KC_DOT,       COMBO_END };
+const uint16_t PROGMEM combo_h_comm[]        = { KC_H,         KC_COMM,      COMBO_END };
+const uint16_t PROGMEM combo_h_dot[]         = { KC_H,         KC_DOT,       COMBO_END };
+const uint16_t PROGMEM combo_h_scln[]        = { KC_H,         KC_SCLN,      COMBO_END };
+const uint16_t PROGMEM combo_comm_scln[]     = { KC_COMM,      KC_SCLN,      COMBO_END };
+const uint16_t PROGMEM combo_dot_scln[]      = { KC_DOT,       KC_SCLN,      COMBO_END };
+const uint16_t PROGMEM combo_h_comm_dot[]    = { KC_H,         KC_COMM,      KC_DOT,       COMBO_END };
+const uint16_t PROGMEM combo_comm_dot_scln[] = { KC_COMM,      KC_DOT,       KC_SCLN,      COMBO_END };
+const uint16_t PROGMEM combo_n_e[]           = { RGUI_T(KC_N), RCTL_T(KC_E), COMBO_END };
+const uint16_t PROGMEM combo_e_i[]           = { RCTL_T(KC_E), RALT_T(KC_I), COMBO_END };
+const uint16_t PROGMEM combo_n_e_i[]         = { RGUI_T(KC_N), RCTL_T(KC_E), RALT_T(KC_I), COMBO_END };
+const uint16_t PROGMEM combo_e_i_o[]         = { RCTL_T(KC_E), RALT_T(KC_I), RSFT_T(KC_O), COMBO_END };
+const uint16_t PROGMEM combo_i_o[]           = { RALT_T(KC_I), RSFT_T(KC_O), COMBO_END };
+const uint16_t PROGMEM combo_n_i[]           = { RGUI_T(KC_N), RALT_T(KC_I), COMBO_END };
+const uint16_t PROGMEM combo_e_o[]           = { RCTL_T(KC_E), RSFT_T(KC_O), COMBO_END };
+const uint16_t PROGMEM combo_h_e[]           = { KC_H,         RCTL_T(KC_E), COMBO_END };
+const uint16_t PROGMEM combo_e_dot[]         = { RCTL_T(KC_E), KC_DOT,       COMBO_END };
+const uint16_t PROGMEM combo_l_u[]           = { KC_L,         KC_U,         COMBO_END };
+const uint16_t PROGMEM combo_u_y[]           = { KC_U,         KC_Y,         COMBO_END };
 
 // left hand combos
 const uint16_t PROGMEM combo_x_f[] = { KC_X,         KC_F,         COMBO_END };
@@ -57,7 +54,15 @@ const uint16_t PROGMEM combo_s_t[] = { LCTL_T(KC_S), LGUI_T(KC_T), COMBO_END };
 const uint16_t PROGMEM combo_a_t[] = { LSFT_T(KC_A), LGUI_T(KC_T), COMBO_END };
 const uint16_t PROGMEM combo_r_t[] = { LALT_T(KC_R), LGUI_T(KC_T), COMBO_END };
 
+enum combo_actions {
+    COMBO_ACTION_CAPS,
+    COMBO_ACTION_XCASE,
+};
+
 combo_t key_combos[COMBO_COUNT] = {
+    // actions
+    [COMBO_ACTION_CAPS] = COMBO_ACTION(combo_h_comm_dot),
+    [COMBO_ACTION_XCASE] = COMBO_ACTION(combo_comm_dot_scln),
     // right hand combos
     COMBO(combo_h_dot, KC_LBRC),
     COMBO(combo_comm_scln, KC_RBRC),
@@ -80,6 +85,23 @@ combo_t key_combos[COMBO_COUNT] = {
     COMBO(combo_a_t, KC_EXLM),
     COMBO(combo_r_t, KC_HASH),
 };
+
+void process_combo_event(uint16_t combo_index, bool pressed) {
+    switch (combo_index) {
+        case COMBO_ACTION_CAPS:
+            if (pressed) {
+                enable_caps_word();
+                enable_xcase();
+            }
+            break;
+
+        case COMBO_ACTION_XCASE:
+            if (pressed) {
+                enable_xcase();
+            }
+            break;
+    }
+}
 
 bool get_combo_must_tap(uint16_t index, combo_t *combo) {
     // If you want *all* combos, that have Mod-Tap/Layer-Tap/Momentary keys in its chord, to be tap-only, this is for you:
@@ -127,11 +149,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
 
     [_COLEMAK] = LAYOUT(
-        KC_0,   KC_1,         KC_2,         KC_3,         KC_4,           KC_5,                             KC_6,    KC_7,              KC_8,         KC_9,         KC_0,         KC_BSPC,
-        KC_TAB, KC_Q,         KC_W,         KC_C,         KC_P,           KC_B,                             KC_J,    KC_L,              KC_U,         KC_Y,         KC_SLSH,      KC_MINS,
-        KC_ESC, LSFT_T(KC_A), LALT_T(KC_R), LCTL_T(KC_S), LGUI_T(KC_T),   KC_G,                             KC_M,    RGUI_T(KC_N),      RCTL_T(KC_E), RALT_T(KC_I), RSFT_T(KC_O), KC_QUOT,
-        KC_GRV, KC_Z,         KC_X,         KC_F,         KC_D,           KC_V,        KC_LBRC, KC_RBRC,    KC_K,    KC_H,              KC_COMM,      KC_DOT,       KC_SCLN,      KC_BSLS,
-                               KC_CAPS,      KC_LBRC,      OSM(MOD_LSFT),  LT(_SYMBOLS, KC_ENT), LT(_NAVNUM, KC_SPC), TD(TD_CAPSW_BSPC), KC_RBRC,  TG(_QWERTY)
+        KC_0,                           KC_1,         KC_2,          KC_3,         KC_4,         KC_5,       KC_6,    KC_7,            KC_8,         KC_9,         KC_0,         KC_BSPC,
+        KC_TAB,                         KC_Q,         KC_W,          KC_C,         KC_P,         KC_B,       KC_J,    KC_L,            KC_U,         KC_Y,         KC_SLSH,      KC_MINS,
+        KC_ESC,                         LSFT_T(KC_A), LALT_T(KC_R),  LCTL_T(KC_S), LGUI_T(KC_T), KC_G,       KC_M,    RGUI_T(KC_N),    RCTL_T(KC_E), RALT_T(KC_I), RSFT_T(KC_O), KC_QUOT,
+        KC_GRV,                         KC_Z,         KC_X,          KC_F,         KC_D,         KC_V,       KC_LBRC, KC_RBRC,         KC_K,         KC_H,         KC_COMM,      KC_DOT,  KC_SCLN, KC_BSLS,
+                               KC_CAPS, KC_LBRC,      OSM(MOD_LSFT), LT(_SYMBOLS,  KC_ENT),      LT(_NAVNUM, KC_SPC), RSFT_T(KC_BSPC), KC_RBRC,      TG(_QWERTY)
     ),
 
     [_QWERTY] = LAYOUT(
@@ -279,7 +301,3 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     // Tri-state layer _FUNCTION (when both layers are enabled, the third layer is activated
     return update_tri_layer_state(state, _NAVNUM, _SYMBOLS, _FUNCTION);
 }
-
-qk_tap_dance_action_t tap_dance_actions[] = {
-    [TD_CAPSW_BSPC] = ACTION_TAP_DANCE_FN_ADVANCED(td_capsw_bspc_each, td_capsw_bspc_finished, td_capsw_bspc_reset),
-};

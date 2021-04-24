@@ -16,14 +16,13 @@ BLUETOOTH_ENABLE = no       # Enable Bluetooth with the Adafruit EZ-Key HID
 RGBLIGHT_ENABLE = yes       # Enable WS2812 RGB underlight. 
 SWAP_HANDS_ENABLE = no      # Enable one-hand typing
 OLED_DRIVER_ENABLE= yes     # OLED display
-TAP_DANCE_ENABLE = yes
+TAP_DANCE_ENABLE = no
 COMBO_ENABLE = yes
 
 # Do not enable SLEEP_LED_ENABLE. it uses the same timer as BACKLIGHT_ENABLE
 SLEEP_LED_ENABLE = no    # Breathing sleep LED during USB suspend
 
-SRC += casemodes.c \
-	   tap_dance_capsw_bspc.c
+SRC += casemodes.c
 
 # If you want to change the display of OLED, you need to change here
 SRC +=  ./lib/rgb_state_reader.c \
