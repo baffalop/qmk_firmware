@@ -121,12 +121,19 @@ const uint16_t PROGMEM combo_l_u[]           = { KC_L,         KC_U,         COM
 const uint16_t PROGMEM combo_u_y[]           = { KC_U,         KC_Y,         COMBO_END };
 
 // left hand combos
-const uint16_t PROGMEM combo_x_f[] = { KC_X,         KC_F,         COMBO_END };
-const uint16_t PROGMEM combo_a_r[] = { LSFT_T(KC_A), LALT_T(KC_R), COMBO_END };
-const uint16_t PROGMEM combo_r_s[] = { LALT_T(KC_R), LCTL_T(KC_S), COMBO_END };
-const uint16_t PROGMEM combo_s_t[] = { LCTL_T(KC_S), LGUI_T(KC_T), COMBO_END };
-const uint16_t PROGMEM combo_a_t[] = { LSFT_T(KC_A), LGUI_T(KC_T), COMBO_END };
-const uint16_t PROGMEM combo_r_t[] = { LALT_T(KC_R), LGUI_T(KC_T), COMBO_END };
+const uint16_t PROGMEM combo_x_f[]   = { KC_X,         KC_F,         COMBO_END };
+const uint16_t PROGMEM combo_a_r[]   = { LSFT_T(KC_A), LALT_T(KC_R), COMBO_END };
+const uint16_t PROGMEM combo_a_s[]   = { LSFT_T(KC_A), LCTL_T(KC_S), COMBO_END };
+const uint16_t PROGMEM combo_r_s[]   = { LALT_T(KC_R), LCTL_T(KC_S), COMBO_END };
+const uint16_t PROGMEM combo_s_t[]   = { LCTL_T(KC_S), LGUI_T(KC_T), COMBO_END };
+const uint16_t PROGMEM combo_a_t[]   = { LSFT_T(KC_A), LGUI_T(KC_T), COMBO_END };
+const uint16_t PROGMEM combo_r_t[]   = { LALT_T(KC_R), LGUI_T(KC_T), COMBO_END };
+const uint16_t PROGMEM combo_s_d[]   = { LCTL_T(KC_S), KC_D,         COMBO_END };
+const uint16_t PROGMEM combo_c_p[]   = { KC_C,         KC_P,         COMBO_END };
+const uint16_t PROGMEM combo_w_t[]   = { KC_W,         KC_T,         COMBO_END };
+const uint16_t PROGMEM combo_w_c[]   = { KC_W,         KC_C,         COMBO_END };
+const uint16_t PROGMEM combo_w_p[]   = { KC_W,         KC_P,         COMBO_END };
+const uint16_t PROGMEM combo_w_c_p[] = { KC_W,         KC_C,         KC_P, COMBO_END };
 
 enum combo_actions {
     COMBO_ACTION_EMDASH,
@@ -161,6 +168,11 @@ combo_t key_combos[COMBO_COUNT] = {
     COMBO(combo_s_t, KC_DLR),
     COMBO(combo_a_t, KC_EXLM),
     COMBO(combo_r_t, KC_HASH),
+    COMBO(combo_s_d, KC_PERC),
+    COMBO(combo_a_s, KC_0),
+    COMBO(combo_c_p, KC_1),
+    COMBO(combo_w_c, KC_2),
+    COMBO(combo_w_p, KC_3),
 };
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
