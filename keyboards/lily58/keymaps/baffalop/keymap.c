@@ -78,9 +78,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_NAVNUM] = LAYOUT(
         _______, _______,      _______,      _______,      _______,      _______,                   _______, _______,         _______,       _______,         _______,        _______,
-        _______, KC_0,         KC_4,         KC_3,         KC_5,         KC_5,                      KC_LBRC, KC_LCBR,         KC_0,          KC_RCBR,         KC_RBRC,        _______,
-        _______, LSFT_T(KC_6), LALT_T(KC_1), LCTL_T(KC_2), LGUI_T(KC_0), KC_6,                      KC_LEFT, RGUI_T(KC_DOWN), RCTL_T(KC_UP), RALT_T(KC_RGHT), RSFT_T(KC_EQL), KC_UNDS,
-        _______, KC_0,         KC_7,         KC_8,         KC_9,         _______, _______, SW_WIND, _______, KC_MINS,         KC_UNDS,       KC_PLUS,         KC_PIPE,        _______,
+        _______, KC_0,         KC_7,         KC_8,         KC_9,         KC_6,                      KC_PLUS, KC_1,            KC_0,          KC_2,            KC_9,           _______,
+        _______, LSFT_T(KC_0), LALT_T(KC_4), LCTL_T(KC_3), LGUI_T(KC_5), KC_6,                      KC_LEFT, RGUI_T(KC_DOWN), RCTL_T(KC_UP), RALT_T(KC_RGHT), RSFT_T(KC_EQL), KC_SLSH,
+        _______, KC_0,         KC_6,         KC_2,         KC_9,         _______, _______, SW_WIND, KC_PLUS, KC_MINS,         _______,       _______,         KC_COLN,        _______,
                                              _______,      _______,      _______, _______, _______, _______, _______,         _______
     ),
 
