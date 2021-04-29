@@ -114,6 +114,8 @@ const uint16_t PROGMEM combo_n_e[]           = { RGUI_T(KC_N), RCTL_T(KC_E), COM
 const uint16_t PROGMEM combo_e_i[]           = { RCTL_T(KC_E), RALT_T(KC_I), COMBO_END };
 const uint16_t PROGMEM combo_n_e_i[]         = { RGUI_T(KC_N), RCTL_T(KC_E), RALT_T(KC_I), COMBO_END };
 const uint16_t PROGMEM combo_e_i_o[]         = { RCTL_T(KC_E), RALT_T(KC_I), RSFT_T(KC_O), COMBO_END };
+const uint16_t PROGMEM combo_n_e_o[]         = { RGUI_T(KC_N), RCTL_T(KC_E), RSFT_T(KC_O), COMBO_END };
+const uint16_t PROGMEM combo_n_i_o[]         = { RGUI_T(KC_N), RALT_T(KC_I), RSFT_T(KC_O), COMBO_END };
 const uint16_t PROGMEM combo_i_o[]           = { RALT_T(KC_I), RSFT_T(KC_O), COMBO_END };
 const uint16_t PROGMEM combo_n_i[]           = { RGUI_T(KC_N), RALT_T(KC_I), COMBO_END };
 const uint16_t PROGMEM combo_e_o[]           = { RCTL_T(KC_E), RSFT_T(KC_O), COMBO_END };
@@ -142,16 +144,18 @@ const uint16_t PROGMEM combo_w_p[]   = { KC_W,         KC_P,         COMBO_END }
 const uint16_t PROGMEM combo_w_c_p[] = { KC_W,         KC_C,         KC_P, COMBO_END };
 
 enum combo_actions {
-    COMBO_ACTION_EMDASH,
     COMBO_ACTION_CAPS,
+    COMBO_ACTION_CAPS_XCASE,
     COMBO_ACTION_XCASE,
+    COMBO_ACTION_CAMELCASE,
 };
 
 combo_t key_combos[COMBO_COUNT] = {
     // actions
-    [COMBO_ACTION_EMDASH] = COMBO_ACTION(combo_n_o),
     [COMBO_ACTION_CAPS] = COMBO_ACTION(combo_n_e_i),
+    [COMBO_ACTION_CAPS_XCASE] = COMBO_ACTION(combo_n_i_o),
     [COMBO_ACTION_XCASE] = COMBO_ACTION(combo_e_i_o),
+    [COMBO_ACTION_CAMELCASE] = COMBO_ACTION(combo_n_e_o),
     // right hand combos
     COMBO(combo_comm_dot, KC_QUES),
     COMBO(combo_n_i, KC_LBRC),
@@ -182,24 +186,23 @@ combo_t key_combos[COMBO_COUNT] = {
 };
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
+    if (!pressed) {
+        return;
+    }
+
     switch (combo_index) {
-        case COMBO_ACTION_EMDASH:
-            if (pressed) {
-                tap_code16(LSA(KC_MINS));
-            }
-            break;
-
         case COMBO_ACTION_CAPS:
-            if (pressed) {
-                enable_caps_word();
-                enable_xcase();
-            }
+            enable_caps_word();
             break;
-
+        case COMBO_ACTION_CAPS_XCASE:
+            enable_caps_word();
+            enable_xcase();
+            break;
         case COMBO_ACTION_XCASE:
-            if (pressed) {
-                enable_xcase();
-            }
+            enable_xcase();
+            break;
+        case COMBO_ACTION_CAMELCASE:
+            enable_xcase_with(OSM(MOD_LSFT));
             break;
     }
 }
