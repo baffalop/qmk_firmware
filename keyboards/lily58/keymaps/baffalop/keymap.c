@@ -30,11 +30,17 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 }
 
 bool get_hold_on_other_keypress(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode & 0xFF) {
-        case KC_SPC:
-            return false;
+    switch (keycode) {
+        case OSM(MOD_LSFT):
+            return true;
     }
-    return true;
+
+    switch (keycode & 0xFF) {
+        case KC_ENT:
+            return true;
+    }
+
+    return false;
 }
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
