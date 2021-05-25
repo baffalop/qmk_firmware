@@ -133,6 +133,10 @@ const uint16_t PROGMEM combo_u_o[]           = { KC_U,         RSFT_T(KC_O), COM
 const uint16_t PROGMEM combo_l_o[]           = { KC_L,         RSFT_T(KC_O), COMBO_END };
 const uint16_t PROGMEM combo_u_slsh[]        = { KC_U,         KC_SLSH, COMBO_END };
 const uint16_t PROGMEM combo_l_slsh[]        = { KC_L,         KC_SLSH, COMBO_END };
+const uint16_t PROGMEM combo_j_l[]           = { KC_J,         KC_L,         COMBO_END };
+const uint16_t PROGMEM combo_j_u[]           = { KC_J,         KC_U,         COMBO_END };
+const uint16_t PROGMEM combo_j_y[]           = { KC_J,         KC_Y,         COMBO_END };
+const uint16_t PROGMEM combo_j_l_u[]         = { KC_J,         KC_L,         KC_U,         COMBO_END };
 
 // left hand combos
 const uint16_t PROGMEM combo_x_f[]   = { KC_X,         KC_F,         COMBO_END };
@@ -165,6 +169,7 @@ combo_t key_combos[COMBO_COUNT] = {
     // right hand combos
     COMBO(combo_comm_dot, KC_QUES),
     COMBO(combo_h_comm, KC_UNDS),
+    COMBO(combo_h_comm_dot, KC_PLUS),
     COMBO(combo_comm_dot_quot, KC_PIPE),
     COMBO(combo_n_e, KC_MINS),
     COMBO(combo_e_i, KC_DQT),
@@ -178,8 +183,12 @@ combo_t key_combos[COMBO_COUNT] = {
     COMBO(combo_l_u, KC_1),
     COMBO(combo_l_y, KC_2),
     COMBO(combo_l_u_y, KC_3),
-    COMBO(combo_u_slsh, KC_5),
-    COMBO(combo_l_slsh, KC_9),
+    COMBO(combo_u_slsh, KC_9),
+    COMBO(combo_l_slsh, KC_4),
+    COMBO(combo_j_l, KC_5),
+    COMBO(combo_j_u, KC_6),
+    COMBO(combo_j_y, KC_7),
+    COMBO(combo_j_l_u, KC_8),
     // left hand combos
     COMBO(combo_x_f, KC_GRV),
     COMBO(combo_r_s, KC_AT),
