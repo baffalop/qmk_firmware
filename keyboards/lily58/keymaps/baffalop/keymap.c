@@ -280,6 +280,7 @@ bool use_default_xcase_separator(uint16_t keycode, const keyrecord_t *record) {
     switch (keycode) { 
         case KC_A ... KC_Z: 
         case KC_1 ... KC_0: 
+        case KC_SPC:
             return true; 
     } 
     return false;
