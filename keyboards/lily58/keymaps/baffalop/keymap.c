@@ -67,8 +67,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_GRV,     KC_Z,         KC_X,         KC_F,         KC_D,         KC_V,          KC_LBRC,               KC_RBRC,             KC_K,            KC_H,         KC_COMM,      KC_DOT,       KC_QUOT,      KC_BSLS,
                                                 KC_CAPS,      KC_LBRC,      OSM(MOD_LSFT), LT(_SYMBOLS,  KC_ENT), LT(_NAVNUM, KC_SPC), RSFT_T(KC_BSPC), KC_DEL,       TG(_QWERTY)
     ),
-
-    [_QWERTY] = LAYOUT(
+                                         
+    [_QWERTY] = LAYOUT(                  
         _______, _______,      _______,      _______,      _______,      _______,                   _______, _______,      _______,      _______,      _______,         _______,
         _______, KC_Q,         KC_W,         KC_E,         KC_R,         KC_T,                      KC_Y,    KC_U,         KC_I,         KC_O,         KC_P,            _______,
         _______, LSFT_T(KC_A), LALT_T(KC_S), LCTL_T(KC_D), LGUI_T(KC_F), KC_G,                      KC_H,    RGUI_T(KC_J), RCTL_T(KC_K), RALT_T(KC_L), RSFT_T(KC_SCLN), _______,
@@ -77,11 +77,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_NAVNUM] = LAYOUT(
-        _______, _______,      _______,      _______,      _______,      _______,                   _______, _______,         _______,       _______,         _______,        _______,
-        _______, KC_0,         KC_7,         KC_8,         KC_9,         KC_6,                      KC_PLUS, KC_1,            KC_2,          KC_0,            KC_9,           _______,
-        _______, LSFT_T(KC_0), LALT_T(KC_4), LCTL_T(KC_3), LGUI_T(KC_5), KC_6,                      KC_LEFT, RGUI_T(KC_DOWN), RCTL_T(KC_UP), RALT_T(KC_RGHT), RSFT_T(KC_EQL), KC_SLSH,
-        _______, KC_0,         KC_1,         KC_2,         KC_9,         _______, _______, SW_WIND, KC_PLUS, KC_MINS,         _______,       _______,         KC_COLN,        _______,
-                                             _______,      _______,      _______, _______, _______, _______, _______,         _______
+        _______,                 _______,      _______,      _______,      _______,      _______,                   _______, _______,         _______,       _______,         _______,        _______,
+        _______,                 KC_0,         KC_7,         KC_3,         KC_4,         KC_PERC,                   KC_7,    KC_8,            KC_0,          KC_9,            KC_9,           _______,
+        _______,                 LSFT_T(KC_0), LALT_T(KC_1), LCTL_T(KC_2), LGUI_T(KC_5), KC_6,                      KC_LEFT, RGUI_T(KC_DOWN), RCTL_T(KC_UP), RALT_T(KC_RGHT), RSFT_T(KC_EQL), KC_SLSH,
+        _______,                 KC_0,         KC_7,         KC_8,         KC_9,         _______, _______, SW_WIND, KC_PLUS, KC_MINS,         _______,       _______,         KC_COLN,        _______,
+                                                             _______,      _______,      _______, _______, _______, _______, _______,         _______
     ),
 
     [_SYMBOLS] = LAYOUT(
