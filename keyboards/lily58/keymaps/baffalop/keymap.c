@@ -331,6 +331,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
 
         case OSM(MOD_LSFT):
+            if (!record->event.pressed) {
+                return true;
+            }
+
+            // pressing OSS again cancels it
+            if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+                clear_oneshot_mods();
+                return false;
+            }
+
             if (case_modes_were_on) {
                 return false;
             }
