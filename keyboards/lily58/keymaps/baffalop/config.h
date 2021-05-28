@@ -42,15 +42,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define COMBO_TERM 25
 #define COMBO_MUST_TAP_PER_COMBO
 
-#undef RGBLED_NUM
-#define RGBLED_NUM 6
-#define RGBLIGHT_SPLIT { 3, 3 }
-#define RGBLIGHT_DEFAULT_HUE 58
-#define RGBLIGHT_LIMIT_VAL 120
-#define RGBLIGHT_HUE_STEP 10
-#define RGBLIGHT_SAT_STEP 17
-#define RGBLIGHT_VAL_STEP 17
-
 // Underglow
 /*
 #undef RGBLED_NUM
