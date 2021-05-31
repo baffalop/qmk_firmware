@@ -78,8 +78,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_NAVNUM] = LAYOUT(
         _______,                 _______,      _______,      _______,      _______,      _______,                   _______, _______,         _______,       _______,         _______,        _______,
-        _______,                 KC_0,         KC_6,         KC_5,         KC_4,         A(KC_3),                   KC_7,    KC_7,            KC_8,          KC_9,            KC_9,           _______,
-        _______,                 LSFT_T(KC_0), LALT_T(KC_1), LCTL_T(KC_3), LGUI_T(KC_2), KC_PERC,                   KC_LEFT, RGUI_T(KC_DOWN), RCTL_T(KC_UP), RALT_T(KC_RGHT), RSFT_T(KC_EQL), KC_SLSH,
+        _______,                 KC_0,         KC_6,         KC_5,         KC_4,         A(KC_3),                   KC_6,    KC_7,            KC_8,          KC_9,            KC_9,           _______,
+        _______,                 LSFT_T(KC_0), LALT_T(KC_2), LCTL_T(KC_3), LGUI_T(KC_1), KC_PERC,                   KC_LEFT, RGUI_T(KC_DOWN), RCTL_T(KC_UP), RALT_T(KC_RGHT), RSFT_T(KC_EQL), KC_SLSH,
         _______,                 KC_0,         KC_7,         KC_8,         KC_9,         _______, _______, SW_WIND, KC_PLUS, KC_MINS,         _______,       _______,         KC_COLN,        _______,
                                                              _______,      _______,      _______, KC_0,    _______, _______, _______,         _______
     ),
