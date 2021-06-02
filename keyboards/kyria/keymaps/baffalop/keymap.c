@@ -150,9 +150,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             
         case REPEAT:
             if (record->event.pressed) {
-                register_code16(last_keycode);
-            } else {
-                unregister_code16(last_keycode);
+                tap_code16(last_keycode);
+                last_keycode = KC_SPC;
             }
             return false;
 
