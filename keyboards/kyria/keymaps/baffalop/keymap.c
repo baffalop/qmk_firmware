@@ -22,22 +22,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Base Layer: COLEMAK
  *
  * ,----------------------------------------.                              ,---------------------------------------.
- * | --- |   Q  |   W  |   C  |   P  |   B  |                              |   J  |   L  |   U  |   Y  |  /  |  -  |
+ * | Tab |   Q  |   W  |   C  |   P  |   B  |                              |   J  |   L  |   U  |   Y  |  /  |  -  |
  * |-----+------+------+------+------+------|                              |------+------+------+------+-----+-----|
- * | Tab |   A  |   R  |  S   |   T  |   G  |                              |   M  |   N  |   E  |   I  |  O  |  '  |
+ * | Esc |   A  |   R  |  S   |   T  |   G  |                              |   M  |   N  |   E  |   I  |  O  |  '  |
  * |-----+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+-----+-----|
- * | `   |   Z  |   X  |   F  |   D  |   V  | ---- | ---  |  | Del  | ---- |   K  |   H  | ,  < | . >  |  /  |  \  |
+ * | `   |   Z  |   X  |   F  |   D  |   V  | ---- | ---- |  | ---- | ---- |   K  |   H  | ,  < | . >  |  /  |  \  |
  * `-------------------+------+------+------+------+------|  |------+------+------+------+------+------------------'
- *                     | XXXX | Caps | Esc  |1-shot| Enter|  | Bksp | Space|Repeat|Qwerty| XXXX |
- *                     |      |      | Num  | shift| Sym  |  |      | Nav  |      |      |      |
+ *                     | XXXX | Caps |Repeat| OSS/ | Enter|  | Bksp | Space| Del | Del  |Qwerty|
+ *                     |      |      |      | Sym  | Num  |  |      | Nav  |      |      |      |
  *                     `----------------------------------'  `----------------------------------'
  */
 
     [_COLEMAK] = LAYOUT(
-        KC_ESC,     KC_Q,         KC_W,         KC_C,         KC_P,         KC_B,                                                                                 KC_J,   KC_L,         KC_U,         KC_Y,         KC_SLSH,      KC_MINS,
-        KC_TAB,     LSFT_T(KC_A), LALT_T(KC_R), LCTL_T(KC_S), LGUI_T(KC_T), KC_G,                                                                                 KC_M,   RGUI_T(KC_N), RCTL_T(KC_E), RALT_T(KC_I), RSFT_T(KC_O), KC_QUOT,
-        KC_GRV,     KC_Z,         KC_X,         KC_F,         KC_D,         KC_V,             XXXXXXX,       XXXXXXX,          KC_DEL,          XXXXXXX,          KC_K,   KC_H,         KC_COMM,      KC_DOT,       KC_SCLN,      KC_BSLS,
-                                                XXXXXXX,      KC_CAPS,      LT(_NUM, KC_ESC), OSM(MOD_LSFT), LT(_SYM, KC_ENT), RSFT_T(KC_BSPC), LT(_NAV, KC_SPC), REPEAT, TG(_QWERTY),  XXXXXXX
+        KC_TAB,     KC_Q,         KC_W,         KC_C,         KC_P,         KC_B,                                                                        KC_J,   KC_L,         KC_U,         KC_Y,         KC_SLSH,      KC_MINS,
+        KC_ESC,     LSFT_T(KC_A), LALT_T(KC_R), LCTL_T(KC_S), LGUI_T(KC_T), KC_G,                                                                        KC_M,   RGUI_T(KC_N), RCTL_T(KC_E), RALT_T(KC_I), RSFT_T(KC_O), KC_QUOT,
+        KC_GRV,     KC_Z,         KC_X,         KC_F,         KC_D,         KC_V,   XXXXXXX,        XXXXXXX,          XXXXXXX,         XXXXXXX,          KC_K,   KC_H,         KC_COMM,      KC_DOT,       KC_SCLN,      KC_BSLS,
+                                                XXXXXXX,      KC_CAPS,      REPEAT, OSM(MOD_LSFT),  LT(_SYM, KC_ENT), RSFT_T(KC_BSPC), LT(_NAV, KC_SPC), KC_DEL, KC_DEL,       TG(_QWERTY)
     ),
                                          
     [_QWERTY] = LAYOUT(                  
