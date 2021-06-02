@@ -4,8 +4,8 @@
 enum layer_number {
     _COLEMAK = 0,
     _QWERTY,
-    _NUM,
     _NAV,
+    _NUM,
     _SYM,
     _FUNC,
 };
@@ -47,19 +47,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                              _______,      _______,      _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
+     [_NAV] = LAYOUT(
+       _______, KC_0,         KC_6,         KC_5,         KC_4,         A(KC_3),                                     KC_6,    KC_7,            KC_8,          KC_9,            SW_WIND,        _______,
+       _______, LSFT_T(KC_0), LALT_T(KC_1), LCTL_T(KC_3), LGUI_T(KC_2), KC_PERC,                                     KC_LEFT, RGUI_T(KC_DOWN), RCTL_T(KC_UP), RALT_T(KC_RGHT), RSFT_T(KC_EQL), KC_SLSH,
+       _______, KC_0,         KC_7,         KC_8,         KC_9,         _______, _______, _______, _______, _______, KC_PLUS, KC_MINS,         _______,       _______,         KC_COLN,        _______,
+                                                      _______, _______, _______, KC_0,    _______, _______, _______, SW_WIND, _______, _______
+     ),
+
     [_NUM] = LAYOUT(
       _______, KC_EXLM, KC_AT,   KC_LCBR,         KC_RCBR,        KC_PIPE,                                     A(KC_3), KC_4,    KC_5,    KC_6,  _______, _______,
       _______, KC_LSFT, KC_LALT, LCTL_T(KC_COMM), LGUI_T(KC_DOT), KC_PERC,                                     KC_MINS, KC_1,    KC_2,    KC_3,  KC_0,    KC_COLN,
       _______, KC_PERC, KC_DOT,  KC_COMM,         KC_MINS,        KC_TILD, _______, _______, _______, _______, KC_PLUS, KC_7,    KC_8,    KC_9,  KC_SLSH, _______,
-                                                  _______,        _______, _______, _______, _______, _______, _______, KC_0,    KC_LBRC, KC_RBRC
+                                                  _______,        _______, _______, _______, _______, _______, KC_0,    _______, KC_LBRC, KC_RBRC
     ),
-
-     [_NAV] = LAYOUT(
-       _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______,  _______, _______,
-       _______, _______, _______, _______, _______, _______,                                     KC_LEFT, KC_DOWN,   KC_UP, KC_RIGHT, _______, _______,
-       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, SW_WIND, _______, _______,  _______, _______,
-                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
-     ),
 
     [_SYM] = LAYOUT(
       _______, KC_3,     KC_2,    KC_0,    KC_1,    KC_0,                                        KC_CIRC, KC_LCBR, KC_ASTR, KC_RCBR, KC_BSLS, _______,
