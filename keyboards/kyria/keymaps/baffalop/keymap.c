@@ -100,6 +100,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // MACROS
 
 bool app_switcher_active = false;
+#define GET_TAP_KC(dual_role_key) dual_role_key & 0xFF
+uint16_t last_keycode = KC_NO;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     bool case_modes_were_on = case_modes_enabled();
@@ -143,8 +145,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (case_modes_were_on) {
                 return false;
             }
+
+            return true;    
             
+        case REPEAT:
+            if (record->event.pressed) {
+                register_code16(last_keycode);
+            } else {
+                unregister_code16(last_keycode);
+            }
+            return false;
+
         default:
+            if (record->event.pressed) {
+                last_keycode = GET_TAP_KC(keycode);
+            }
             return true;
     }
 }
