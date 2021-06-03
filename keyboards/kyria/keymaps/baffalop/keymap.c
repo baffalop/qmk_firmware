@@ -28,16 +28,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |-----+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+-----+-----|
  * | `   |   Z  |   X  |   F  |   D  |   V  | ---- | ---- |  | ---- | ---- |   K  |   H  | ,  < | . >  |  /  |  \  |
  * `-------------------+------+------+------+------+------|  |------+------+------+------+------+------------------'
- *                     | XXXX | Caps |Repeat| OSS/ | Enter|  | Bksp | Space| Del | Del  |Qwerty|
- *                     |      |      |      | Sym  | Num  |  |      | Nav  |      |      |      |
+ *                     | XXXX | Caps | Esc  |1-shot|Repeat|  |Enter |Space |Del   | Del  |Qwerty|
+ *                     |      |      |      |shift | Sym  |  |      | Nav  |      |      |      |
  *                     `----------------------------------'  `----------------------------------'
  */
 
     [_COLEMAK] = LAYOUT(
-        KC_TAB,     KC_Q,         KC_W,         KC_C,         KC_P,         KC_B,                                                                        KC_J,   KC_L,         KC_U,         KC_Y,         KC_SLSH,      KC_MINS,
-        KC_ESC,     LSFT_T(KC_A), LALT_T(KC_R), LCTL_T(KC_S), LGUI_T(KC_T), KC_G,                                                                        KC_M,   RGUI_T(KC_N), RCTL_T(KC_E), RALT_T(KC_I), RSFT_T(KC_O), KC_QUOT,
-        KC_GRV,     KC_Z,         KC_X,         KC_F,         KC_D,         KC_V,   XXXXXXX,        XXXXXXX,          XXXXXXX,         XXXXXXX,          KC_K,   KC_H,         KC_COMM,      KC_DOT,       KC_SCLN,      KC_BSLS,
-                                                XXXXXXX,      KC_CAPS,      REPEAT, OSM(MOD_LSFT),  LT(_SYM, KC_ENT), RSFT_T(KC_BSPC), LT(_NAV, KC_SPC), KC_DEL, KC_DEL,       TG(_QWERTY)
+        KC_TAB,     KC_Q,         KC_W,         KC_C,         KC_P,         KC_B,                                                                KC_J,    KC_L,         KC_U,         KC_Y,         KC_SLSH,      KC_MINS,
+        KC_ESC,     LSFT_T(KC_A), LALT_T(KC_R), LCTL_T(KC_S), LGUI_T(KC_T), KC_G,                                                                KC_M,    RGUI_T(KC_N), RCTL_T(KC_E), RALT_T(KC_I), RSFT_T(KC_O), KC_QUOT,
+        KC_GRV,     KC_Z,         KC_X,         KC_F,         KC_D,         KC_V,   XXXXXXX,         XXXXXXX, XXXXXXX,         XXXXXXX,          KC_K,    KC_H,         KC_COMM,      KC_DOT,       KC_SCLN,      KC_BSLS,
+                                                XXXXXXX,      KC_CAPS,      KC_ESC, LT(_SYM, KC_NO), REPEAT,  RSFT_T(KC_ENT),  LT(_NAV, KC_SPC), KC_BSPC, KC_DEL,       TG(_QWERTY)
     ),
                                          
     [_QWERTY] = LAYOUT(                  
@@ -50,22 +50,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      [_NAV] = LAYOUT(
        _______, KC_0,         KC_6,         KC_5,         KC_4,         A(KC_3),                                     KC_6,    KC_7,            KC_8,          KC_9,            SW_WIND,        _______,
        _______, LSFT_T(KC_0), LALT_T(KC_1), LCTL_T(KC_3), LGUI_T(KC_2), KC_PERC,                                     KC_LEFT, RGUI_T(KC_DOWN), RCTL_T(KC_UP), RALT_T(KC_RGHT), RSFT_T(KC_EQL), KC_SLSH,
-       _______, KC_0,         KC_7,         KC_8,         KC_9,         _______, _______, _______, _______, _______, KC_PLUS, KC_MINS,         _______,       _______,         KC_COLN,        _______,
-                                                      _______, _______, _______, KC_0,    _______, _______, _______, SW_WIND, _______, _______
+       _______, KC_0,         KC_7,         KC_8,         KC_9,         _______, _______, _______, _______, _______, SW_WIND, KC_MINS,         _______,       _______,         KC_COLN,        _______,
+                                                      _______, _______, _______, KC_0,    _______, _______, _______, KC_PLUS, _______, _______
      ),
 
     [_NUM] = LAYOUT(
       _______, KC_EXLM, KC_AT,   KC_LCBR,         KC_RCBR,        KC_PIPE,                                     A(KC_3), KC_4,    KC_5,    KC_6,  _______, _______,
       _______, KC_LSFT, KC_LALT, LCTL_T(KC_COMM), LGUI_T(KC_DOT), KC_PERC,                                     KC_MINS, KC_1,    KC_2,    KC_3,  KC_0,    KC_COLN,
       _______, KC_PERC, KC_DOT,  KC_COMM,         KC_MINS,        KC_TILD, _______, _______, _______, _______, KC_PLUS, KC_7,    KC_8,    KC_9,  KC_SLSH, _______,
-                                                  _______,        _______, _______, _______, _______, _______, KC_0,    _______, KC_LBRC, KC_RBRC
+                                 _______,         _______,        _______,  SW_APP, _______, _______, KC_0,    _______, KC_LBRC, KC_RBRC
     ),
 
     [_SYM] = LAYOUT(
       _______, KC_3,     KC_2,    KC_0,    KC_1,    KC_0,                                        KC_CIRC, KC_LCBR, KC_ASTR, KC_RCBR, KC_BSLS, _______,
       _______, KC_EXLM,  KC_AT,   KC_HASH, KC_DLR,  KC_PERC,                                     KC_MINS, KC_LPRN, KC_PLUS, KC_RPRN, KC_EQL,  KC_PIPE,
-      _______, KC_TILD,  KC_LT,   KC_GRV,  KC_GT,   _______, _______, _______, _______, _______, KC_AMPR, KC_LBRC, KC_UNDS, KC_RBRC, KC_SLSH, KC_BSLS,
-                                  _______, _______, _______, SW_APP,  _______, _______, _______, _______, _______, _______
+      _______, KC_TILD,  KC_LT,   KC_GRV,  KC_GT,   SW_APP,  _______, _______, _______, _______, KC_AMPR, KC_LBRC, KC_UNDS, KC_RBRC, KC_SLSH, KC_BSLS,
+                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
     [_FUNC] = LAYOUT(
@@ -111,6 +111,39 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
 
     switch (keycode) {
+        case REPEAT:
+            if (!record->event.pressed) {
+                return false;
+            }
+
+            tap_code16(last_keycode);
+            return false;    
+            
+        // layer tap with ONE-SHOT SHIFT
+        case LT(_SYM, KC_NO):
+            // pass through hold functionality
+            if (record->tap.count == 0) {
+                return true;
+            }
+
+            if (!record->event.pressed) {
+                return false;
+            }
+            
+            // pressing OSS again cancels it
+            if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+                clear_oneshot_mods();
+                return false;
+            }
+
+            // if OSS has been used to cancel casemodes, do not apply the shift again
+            if (case_modes_were_on) {
+                return false;
+            }
+
+            add_oneshot_mods(MOD_LSFT);
+            return false;
+
         // app and window switcher macros
         case SW_APP:
             if (!record->event.pressed) {
@@ -131,30 +164,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
 
-        case OSM(MOD_LSFT):
-            if (!record->event.pressed) {
-                return true;
-            }
-
-            // pressing OSS again cancels it
-            if (get_oneshot_mods() & MOD_MASK_SHIFT) {
-                clear_oneshot_mods();
-                return false;
-            }
-
-            if (case_modes_were_on) {
-                return false;
-            }
-
-            return true;    
-            
-        case REPEAT:
-            if (record->event.pressed) {
-                tap_code16(last_keycode);
-                last_keycode = KC_SPC;
-            }
-            return false;
-
+        // implement one-shot shift for layer tap key (since `LT(_SYM, OSM(MOD_LSFT))` doesn't work)
         default:
             if (record->event.pressed) {
                 last_keycode = GET_TAP_KC(keycode);
