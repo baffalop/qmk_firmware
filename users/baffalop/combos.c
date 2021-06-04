@@ -22,6 +22,8 @@ const uint16_t PROGMEM combo_n_o[]           = { RGUI_T(KC_N), RSFT_T(KC_O), COM
 const uint16_t PROGMEM combo_n_u[]           = { RGUI_T(KC_N), KC_U,         COMBO_END };
 const uint16_t PROGMEM combo_u_i[]           = { KC_U,         RALT_T(KC_I), COMBO_END };
 const uint16_t PROGMEM combo_n_u_i[]         = { RGUI_T(KC_N), KC_U,         RALT_T(KC_I), COMBO_END };
+const uint16_t PROGMEM combo_n_comm_i[]      = { RGUI_T(KC_N), KC_COMM,      RALT_T(KC_I), COMBO_END };
+const uint16_t PROGMEM combo_h_e_dot[]       = { KC_H,         RCTL_T(KC_E), KC_DOT,       COMBO_END };
 const uint16_t PROGMEM combo_h_e[]           = { KC_H,         RCTL_T(KC_E), COMBO_END };
 const uint16_t PROGMEM combo_e_dot[]         = { RCTL_T(KC_E), KC_DOT,       COMBO_END };
 const uint16_t PROGMEM combo_l_u[]           = { KC_L,         KC_U,         COMBO_END };
@@ -63,21 +65,23 @@ combo_t key_combos[COMBO_COUNT] = {
     // actions
     [COMBO_ACTION_CAPS] = COMBO_ACTION(combo_n_e_i),
     [COMBO_ACTION_CAPS_XCASE] = COMBO_ACTION(combo_n_i_o),
-    [COMBO_ACTION_XCASE] = COMBO_ACTION(combo_e_i_o),
-    [COMBO_ACTION_CAMELCASE] = COMBO_ACTION(combo_n_e_o),
+    [COMBO_ACTION_XCASE] = COMBO_ACTION(combo_n_e_o),
     // right hand combos
     COMBO(combo_comm_dot, KC_QUES),
     COMBO(combo_h_comm, KC_UNDS),
-    COMBO(combo_h_comm_dot, KC_PLUS),
-    COMBO(combo_comm_dot_scln, KC_PIPE),
+    COMBO(combo_h_comm_dot, KC_SCLN),
+    COMBO(combo_n_comm_i, KC_PLUS),
+    COMBO(combo_h_e_dot, KC_PERC),
     COMBO(combo_n_e, KC_MINS),
     COMBO(combo_e_i, KC_DQT),
+    COMBO(combo_e_i_o, KC_COLN),
     COMBO(combo_h_quot, KC_EQL),
     COMBO(combo_n_u, KC_SLSH),
     COMBO(combo_u_i, KC_BSLS),
     COMBO(combo_n_u_i, KC_CIRC),
     COMBO(combo_h_dot, KC_LBRC),
     COMBO(combo_comm_quot, KC_RBRC),
+    COMBO(combo_comm_dot_quot, KC_SCLN),
     COMBO(combo_u_y, KC_0),
     COMBO(combo_l_u, KC_1),
     COMBO(combo_l_y, KC_2),
