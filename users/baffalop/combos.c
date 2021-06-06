@@ -54,6 +54,18 @@ const uint16_t PROGMEM combo_w_c[]   = { KC_W,         KC_C,         COMBO_END }
 const uint16_t PROGMEM combo_w_p[]   = { KC_W,         KC_P,         COMBO_END };
 const uint16_t PROGMEM combo_w_c_p[] = { KC_W,         KC_C,         KC_P, COMBO_END };
 
+// thumb combos
+const uint16_t PROGMEM combo_th_l[]    = { LT(2, KC_SPC), KC_L,         COMBO_END };
+const uint16_t PROGMEM combo_th_u[]    = { LT(2, KC_SPC), KC_U,         COMBO_END };
+const uint16_t PROGMEM combo_th_y[]    = { LT(2, KC_SPC), KC_Y,         COMBO_END };
+const uint16_t PROGMEM combo_th_n[]    = { LT(2, KC_SPC), RGUI_T(KC_N), COMBO_END };
+const uint16_t PROGMEM combo_th_e[]    = { LT(2, KC_SPC), RCTL_T(KC_E), COMBO_END };
+const uint16_t PROGMEM combo_th_i[]    = { LT(2, KC_SPC), RALT_T(KC_I), COMBO_END };
+const uint16_t PROGMEM combo_th_o[]    = { LT(2, KC_SPC), RSFT_T(KC_O), COMBO_END };
+const uint16_t PROGMEM combo_th_h[]    = { LT(2, KC_SPC), KC_H,         COMBO_END };
+const uint16_t PROGMEM combo_th_comm[] = { LT(2, KC_SPC), KC_COMM,      COMBO_END };
+const uint16_t PROGMEM combo_th_dot[]  = { LT(2, KC_SPC), KC_DOT,       COMBO_END };
+
 enum combo_actions {
     COMBO_ACTION_CAPS,
     COMBO_ACTION_CAPS_XCASE,
@@ -101,6 +113,18 @@ combo_t key_combos[COMBO_COUNT] = {
     COMBO(combo_a_t, KC_EXLM),
     COMBO(combo_r_t, KC_HASH),
     COMBO(combo_s_d, KC_PERC),
+
+    // thumb combos
+    COMBO(combo_th_n, KC_1),
+    COMBO(combo_th_e, KC_2),
+    COMBO(combo_th_i, KC_3),
+    COMBO(combo_th_o, KC_6),
+    COMBO(combo_th_h, KC_5),
+    COMBO(combo_th_comm, KC_0),
+    COMBO(combo_th_dot, KC_4),
+    COMBO(combo_th_l, KC_7),
+    COMBO(combo_th_u, KC_8),
+    COMBO(combo_th_y, KC_9),
 };
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
