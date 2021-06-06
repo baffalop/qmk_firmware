@@ -4,8 +4,8 @@
 enum layer_number {
     _COLEMAK = 0,
     _QWERTY,
-    _NAV,
     _NUM,
+    _NAV,
     _SYM,
     _FUNC,
 };
@@ -34,10 +34,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 
     [_COLEMAK] = LAYOUT(
-        XXXXXXX,  KC_Q,         KC_W,         KC_C,         KC_P,         KC_B,                                                                KC_J,    KC_L,         KC_U,         KC_Y,         KC_SCLN,      XXXXXXX,
-        XXXXXXX,  LSFT_T(KC_A), LALT_T(KC_R), LCTL_T(KC_S), LGUI_T(KC_T), KC_G,                                                                KC_M,    RGUI_T(KC_N), RCTL_T(KC_E), RALT_T(KC_I), RSFT_T(KC_O), XXXXXXX,
-        XXXXXXX,  KC_Z,         KC_X,         KC_F,         KC_D,         KC_V,   XXXXXXX,         KC_TAB,  XXXXXXX,         XXXXXXX,          KC_K,    KC_H,         KC_COMM,      KC_DOT,       KC_QUOT,      XXXXXXX,
-                                              KC_CAPS,      KC_TAB,       KC_ESC, LT(_SYM, KC_NO), REPEAT,  RSFT_T(KC_ENT),  LT(_NAV, KC_SPC), KC_BSPC, KC_DEL,       TG(_QWERTY)
+        XXXXXXX,  KC_Q,         KC_W,         KC_C,         KC_P,         KC_B,                                                                          KC_J,            KC_L,         KC_U,         KC_Y,         KC_SCLN,      XXXXXXX,
+        XXXXXXX,  LSFT_T(KC_A), LALT_T(KC_R), LCTL_T(KC_S), LGUI_T(KC_T), KC_G,                                                                          KC_M,            RGUI_T(KC_N), RCTL_T(KC_E), RALT_T(KC_I), RSFT_T(KC_O), XXXXXXX,
+        XXXXXXX,  KC_Z,         KC_X,         KC_F,         KC_D,         KC_V,   XXXXXXX,         KC_TAB,          XXXXXXX,           XXXXXXX,          KC_K,            KC_H,         KC_COMM,      KC_DOT,       KC_QUOT,      XXXXXXX,
+                                              KC_CAPS,      KC_TAB,       KC_ESC, LT(_SYM, KC_NO), LT(_NUM, KC_NO), LT(_NUM, KC_ENT),  LT(_NAV, KC_SPC), RSFT_T(KC_BSPC), KC_DEL,       TG(_QWERTY)
     ),
                                          
     [_QWERTY] = LAYOUT(                  
@@ -47,19 +47,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                              _______,      _______,      _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
+    [_NUM] = LAYOUT(
+      _______, KC_EXLM, KC_6,         KC_3,            KC_4,           KC_PERC,                                     A(KC_3), KC_7,         KC_8,         KC_9,         KC_SLSH,      _______,
+      _______, KC_LSFT, LALT_T(KC_1), LCTL_T(KC_2),    LGUI_T(KC_5),   KC_6,                                        KC_6,    RGUI_T(KC_5), RCTL_T(KC_0), RALT_T(KC_3), RSFT_T(KC_6), _______,
+      _______, KC_PERC, KC_DOT,       KC_COMM,         KC_MINS,        KC_PERC, _______, _______, _______, _______, SW_WIND, KC_MINS,      _______,      _______,      KC_COLN,      _______,
+                                      _______,         _______,        _______, KC_0,    _______, _______, KC_0,    KC_LBRC, KC_RBRC, _______
+    ),
+
      [_NAV] = LAYOUT(
-       _______, KC_0,         KC_6,         KC_5,         KC_4,         A(KC_3),                                     KC_6,    KC_7,            KC_8,          KC_9,            SW_WIND,        _______,
-       _______, LSFT_T(KC_0), LALT_T(KC_1), LCTL_T(KC_3), LGUI_T(KC_2), KC_PERC,                                     KC_LEFT, RGUI_T(KC_DOWN), RCTL_T(KC_UP), RALT_T(KC_RGHT), RSFT_T(KC_EQL), KC_SLSH,
-       _______, KC_0,         KC_7,         KC_8,         KC_9,         _______, _______, _______, _______, _______, SW_WIND, KC_MINS,         _______,       _______,         KC_COLN,        _______,
+       _______, KC_0,         KC_6,         KC_3,         KC_4,         A(KC_3),                                     KC_6,    A(KC_LEFT),      A(KC_RGHT),    KC_TAB,          SW_WIND,        _______,
+       _______, LSFT_T(KC_0), LALT_T(KC_1), LCTL_T(KC_2), LGUI_T(KC_5), KC_PERC,                                     KC_LEFT, RGUI_T(KC_DOWN), RCTL_T(KC_UP), RALT_T(KC_RGHT), RSFT_T(KC_ESC), KC_SLSH,
+       _______, KC_0,         KC_7,         KC_8,         KC_9,         _______, _______, _______, _______, _______, SW_WIND, S(KC_TAB),       KC_TAB,        KC_ESC,          KC_COLN,        _______,
                                                       _______, _______, _______, KC_0,    _______, _______, _______, KC_PLUS, _______, _______
      ),
-
-    [_NUM] = LAYOUT(
-      _______, KC_EXLM, KC_AT,   KC_LCBR,         KC_RCBR,        KC_PIPE,                                     A(KC_3), KC_4,    KC_5,    KC_6,  _______, _______,
-      _______, KC_LSFT, KC_LALT, LCTL_T(KC_COMM), LGUI_T(KC_DOT), KC_PERC,                                     KC_MINS, KC_1,    KC_2,    KC_3,  KC_0,    KC_COLN,
-      _______, KC_PERC, KC_DOT,  KC_COMM,         KC_MINS,        KC_TILD, _______, _______, _______, _______, KC_PLUS, KC_7,    KC_8,    KC_9,  KC_SLSH, _______,
-                                 _______,         _______,        _______,  SW_APP, _______, _______, KC_0,    _______, KC_LBRC, KC_RBRC
-    ),
 
     [_SYM] = LAYOUT(
       _______, KC_3,     KC_2,    KC_0,    KC_1,    KC_0,                                        KC_CIRC, KC_LCBR, KC_ASTR, KC_RCBR, KC_BSLS, _______,
@@ -111,12 +111,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
 
     switch (keycode) {
-        case REPEAT:
-            if (!record->event.pressed) {
-                return false;
+        case LT(_NUM, KC_NO):
+            // pass through hold functionality
+            if (record->tap.count == 0) {
+                return true;
             }
 
-            tap_code16(last_keycode);
+            if (record->event.pressed) {
+                tap_code16(last_keycode);
+            }
+
             return false;    
             
         // layer tap with ONE-SHOT SHIFT
