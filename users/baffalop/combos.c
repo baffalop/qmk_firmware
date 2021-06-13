@@ -83,6 +83,7 @@ combo_t key_combos[COMBO_COUNT] = {
 
     // right hand combos
     COMBO(combo_comm_dot, KC_QUES),
+    COMBO(combo_dot_quot, KC_SCLN),
     COMBO(combo_h_comm, KC_UNDS),
     COMBO(combo_h_comm_dot, KC_COLN),
     COMBO(combo_n_comm_i, KC_PLUS),
@@ -96,7 +97,7 @@ combo_t key_combos[COMBO_COUNT] = {
     COMBO(combo_n_u_i, KC_CIRC),
     COMBO(combo_h_dot, KC_LBRC),
     COMBO(combo_comm_quot, KC_RBRC),
-    COMBO(combo_comm_dot_quot, KC_SCLN),
+    COMBO(combo_comm_dot_quot, KC_COLN),
     COMBO(combo_u_y, KC_0),
     COMBO(combo_l_u, KC_1),
     COMBO(combo_l_y, KC_2),
