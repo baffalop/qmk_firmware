@@ -12,9 +12,10 @@ enum layer_number {
 
 enum custom_keycodes {
     SW_APP = SAFE_RANGE,
-    SW_WIND,
     REPEAT,
 };
+
+#define SW_WIND G(KC_GRV)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -148,7 +149,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             add_oneshot_mods(MOD_LSFT);
             return false;
 
-        // app and window switcher macros
+        // app switcher
         case SW_APP:
             if (!record->event.pressed) {
                 return false;
@@ -162,11 +163,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
             return false;
 
-        case SW_WIND:
-            if (record->event.pressed) {
-                tap_code16(LGUI(KC_GRV));
-            }
-            return false;
 
         // implement one-shot shift for layer tap key (since `LT(_SYM, OSM(MOD_LSFT))` doesn't work)
         default:
