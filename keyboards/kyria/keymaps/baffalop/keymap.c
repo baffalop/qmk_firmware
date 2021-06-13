@@ -98,6 +98,44 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 };
 
+// CONFIG
+
+// overriding function in casemodes.c
+bool use_default_xcase_separator(uint16_t keycode, const keyrecord_t *record) {
+    switch (keycode) { 
+        case KC_A ... KC_Z: 
+        case KC_1 ... KC_0: 
+        case KC_SPC:
+            return true; 
+    } 
+    return false;
+}
+
+bool terminate_case_modes(uint16_t keycode, const keyrecord_t *record) {
+        switch (keycode) {
+            // Keycodes to ignore (don't disable caps word)
+            case KC_A ... KC_Z:
+            case KC_1 ... KC_0:
+            case KC_MINS:
+            case KC_UNDS:
+            case KC_BSPC:
+            case REPEAT:
+                // If mod chording disable the mods
+                if (record->event.pressed && (get_mods() != 0)) {
+                    return true;
+                }
+                return false;
+
+            default:
+                if (record->event.pressed) {
+                    return true;
+                }
+                break;
+        }
+
+        return false;
+}
+
 // MACROS
 
 bool app_switcher_active = false;
