@@ -139,8 +139,11 @@ bool terminate_case_modes(uint16_t keycode, const keyrecord_t *record) {
 // MACROS
 
 bool app_switcher_active = false;
+
 #define GET_TAP_KC(dual_role_key) dual_role_key & 0xFF
+
 uint16_t last_keycode = KC_NO;
+uint8_t last_modifier = 0;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     bool case_modes_were_on = case_modes_enabled();
@@ -150,6 +153,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
 
     switch (keycode) {
+        // layer tap with REPEAT key
         case LT(_NUM, KC_NO):
             // pass through hold functionality
             if (record->tap.count == 0) {
@@ -157,7 +161,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
 
             if (record->event.pressed) {
+                set_mods(last_modifier);
                 tap_code16(last_keycode);
+                clear_mods();
             }
 
             return false;    
@@ -201,10 +207,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
             return false;
 
+        // ignore these keycodes for repeat key
+        case KC_BSPC:
+        case KC_DEL:
+        case KC_SPC:
+        case KC_ENT:
+            return true;
 
-        // implement one-shot shift for layer tap key (since `LT(_SYM, OSM(MOD_LSFT))` doesn't work)
         default:
             if (record->event.pressed) {
+                uint8_t mod_state = get_mods();
+                uint8_t oneshot_mod_state = get_oneshot_mods();
+                last_modifier = mod_state > oneshot_mod_state ? mod_state : oneshot_mod_state;
                 last_keycode = GET_TAP_KC(keycode);
             }
             return true;
