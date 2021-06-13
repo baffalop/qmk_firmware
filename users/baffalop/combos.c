@@ -54,17 +54,19 @@ const uint16_t PROGMEM combo_w_c[]   = { KC_W,         KC_C,         COMBO_END }
 const uint16_t PROGMEM combo_w_p[]   = { KC_W,         KC_P,         COMBO_END };
 const uint16_t PROGMEM combo_w_c_p[] = { KC_W,         KC_C,         KC_P, COMBO_END };
 
+#define R_THUMB LT(3, KC_SPC)
+
 // thumb combos
-const uint16_t PROGMEM combo_th_l[]    = { LT(2, KC_SPC), KC_L,         COMBO_END };
-const uint16_t PROGMEM combo_th_u[]    = { LT(2, KC_SPC), KC_U,         COMBO_END };
-const uint16_t PROGMEM combo_th_y[]    = { LT(2, KC_SPC), KC_Y,         COMBO_END };
-const uint16_t PROGMEM combo_th_n[]    = { LT(2, KC_SPC), RGUI_T(KC_N), COMBO_END };
-const uint16_t PROGMEM combo_th_e[]    = { LT(2, KC_SPC), RCTL_T(KC_E), COMBO_END };
-const uint16_t PROGMEM combo_th_i[]    = { LT(2, KC_SPC), RALT_T(KC_I), COMBO_END };
-const uint16_t PROGMEM combo_th_o[]    = { LT(2, KC_SPC), RSFT_T(KC_O), COMBO_END };
-const uint16_t PROGMEM combo_th_h[]    = { LT(2, KC_SPC), KC_H,         COMBO_END };
-const uint16_t PROGMEM combo_th_comm[] = { LT(2, KC_SPC), KC_COMM,      COMBO_END };
-const uint16_t PROGMEM combo_th_dot[]  = { LT(2, KC_SPC), KC_DOT,       COMBO_END };
+const uint16_t PROGMEM combo_th_l[]    = { R_THUMB, KC_L,         COMBO_END };
+const uint16_t PROGMEM combo_th_u[]    = { R_THUMB, KC_U,         COMBO_END };
+const uint16_t PROGMEM combo_th_y[]    = { R_THUMB, KC_Y,         COMBO_END };
+const uint16_t PROGMEM combo_th_n[]    = { R_THUMB, RGUI_T(KC_N), COMBO_END };
+const uint16_t PROGMEM combo_th_e[]    = { R_THUMB, RCTL_T(KC_E), COMBO_END };
+const uint16_t PROGMEM combo_th_i[]    = { R_THUMB, RALT_T(KC_I), COMBO_END };
+const uint16_t PROGMEM combo_th_o[]    = { R_THUMB, RSFT_T(KC_O), COMBO_END };
+const uint16_t PROGMEM combo_th_h[]    = { R_THUMB, KC_H,         COMBO_END };
+const uint16_t PROGMEM combo_th_comm[] = { R_THUMB, KC_COMM,      COMBO_END };
+const uint16_t PROGMEM combo_th_dot[]  = { R_THUMB, KC_DOT,       COMBO_END };
 
 enum combo_actions {
     COMBO_ACTION_CAPS,
