@@ -16,6 +16,11 @@ enum custom_keycodes {
 };
 
 #define SW_WIND G(KC_GRV)
+#define SYM_OSS LT(_SYM, KC_F20)
+#define NUM_REPEAT LT(_NUM, KC_F21)
+#define NUM_ENT LT(_NUM, KC_ENT)
+#define NAV_SPC LT(_NAV, KC_SPC)
+#define BSPC_SFT RSFT_T(KC_BSPC)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -35,10 +40,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 
     [_COLEMAK] = LAYOUT(
-        XXXXXXX,  KC_Q,         KC_W,         KC_C,         KC_P,         KC_B,                                                                          KC_J,            KC_L,         KC_U,         KC_Y,         KC_SCLN,      XXXXXXX,
-        XXXXXXX,  LSFT_T(KC_A), LALT_T(KC_R), LCTL_T(KC_S), LGUI_T(KC_T), KC_G,                                                                          KC_M,            RGUI_T(KC_N), RCTL_T(KC_E), RALT_T(KC_I), RSFT_T(KC_O), XXXXXXX,
-        XXXXXXX,  KC_Z,         KC_X,         KC_F,         KC_D,         KC_V,   XXXXXXX,         KC_TAB,          XXXXXXX,           XXXXXXX,          KC_K,            KC_H,         KC_COMM,      KC_DOT,       KC_QUOT,      XXXXXXX,
-                                              KC_CAPS,      KC_TAB,       KC_ESC, LT(_SYM, KC_NO), LT(_NUM, KC_NO), LT(_NUM, KC_ENT),  LT(_NAV, KC_SPC), RSFT_T(KC_BSPC), KC_DEL,       TG(_QWERTY)
+        XXXXXXX,  KC_Q,         KC_W,         KC_C,         KC_P,         KC_B,                                             KC_J,     KC_L,         KC_U,         KC_Y,         KC_SCLN,      XXXXXXX,
+        XXXXXXX,  LSFT_T(KC_A), LALT_T(KC_R), LCTL_T(KC_S), LGUI_T(KC_T), KC_G,                                             KC_M,     RGUI_T(KC_N), RCTL_T(KC_E), RALT_T(KC_I), RSFT_T(KC_O), XXXXXXX,
+        XXXXXXX,  KC_Z,         KC_X,         KC_F,         KC_D,         KC_V,   XXXXXXX, KC_TAB,       XXXXXXX,  XXXXXXX, KC_K,     KC_H,         KC_COMM,      KC_DOT,       KC_QUOT,      XXXXXXX,
+                                              KC_CAPS,      KC_TAB,       KC_ESC, SYM_OSS, NUM_REPEAT,   NUM_ENT,  NAV_SPC, BSPC_SFT, KC_DEL,       TG(_QWERTY)
     ),
                                          
     [_QWERTY] = LAYOUT(                  
@@ -116,10 +121,10 @@ bool terminate_case_modes(uint16_t keycode, const keyrecord_t *record) {
             // Keycodes to ignore (don't disable caps word)
             case KC_A ... KC_Z:
             case KC_1 ... KC_0:
+            case KC_F21: // REPEAT key
             case KC_MINS:
             case KC_UNDS:
             case KC_BSPC:
-            case REPEAT:
                 // If mod chording disable the mods
                 if (record->event.pressed && (get_mods() != 0)) {
                     return true;
@@ -154,7 +159,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     switch (keycode) {
         // layer tap with REPEAT key
-        case LT(_NUM, KC_NO):
+        case NUM_REPEAT:
             // pass through hold functionality
             if (record->tap.count == 0) {
                 return true;
@@ -169,7 +174,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;    
             
         // layer tap with ONE-SHOT SHIFT
-        case LT(_SYM, KC_NO):
+        case SYM_OSS:
             // pass through hold functionality
             if (record->tap.count == 0) {
                 return true;
@@ -208,10 +213,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
 
         // ignore these keycodes for repeat key
-        case KC_BSPC:
+        case NAV_SPC:
+        case NUM_ENT:
+        case BSPC_SFT:
         case KC_DEL:
-        case KC_SPC:
-        case KC_ENT:
             return true;
 
         default:
