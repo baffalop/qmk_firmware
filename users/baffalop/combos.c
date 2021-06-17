@@ -118,16 +118,16 @@ combo_t key_combos[COMBO_COUNT] = {
     COMBO(combo_s_d, KC_PERC),
 
     // thumb combos
-    COMBO(combo_th_n, KC_1),
-    COMBO(combo_th_e, KC_2),
-    COMBO(combo_th_i, KC_3),
+    COMBO(combo_th_n, KC_4),
+    COMBO(combo_th_e, KC_5),
+    COMBO(combo_th_i, KC_6),
     COMBO(combo_th_o, KC_6),
-    COMBO(combo_th_h, KC_5),
-    COMBO(combo_th_comm, KC_0),
-    COMBO(combo_th_dot, KC_4),
-    COMBO(combo_th_l, KC_7),
-    COMBO(combo_th_u, KC_8),
-    COMBO(combo_th_y, KC_9),
+    COMBO(combo_th_h, KC_7),
+    COMBO(combo_th_comm, KC_8),
+    COMBO(combo_th_dot, KC_9),
+    COMBO(combo_th_l, KC_1),
+    COMBO(combo_th_u, KC_2),
+    COMBO(combo_th_y, KC_3),
 };
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
