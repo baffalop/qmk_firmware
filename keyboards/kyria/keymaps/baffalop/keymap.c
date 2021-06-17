@@ -13,6 +13,7 @@ enum layer_number {
 enum custom_keycodes {
     SW_APP = SAFE_RANGE,
     REPEAT,
+    XCASE_ENABLE,
 };
 
 #define SW_WIND G(KC_GRV)
@@ -42,7 +43,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_COLEMAK] = LAYOUT(
         XXXXXXX,  KC_Q,         KC_W,         KC_C,         KC_P,         KC_B,                                             KC_J,     KC_L,         KC_U,         KC_Y,         KC_SCLN,      XXXXXXX,
         XXXXXXX,  LSFT_T(KC_A), LALT_T(KC_R), LCTL_T(KC_S), LGUI_T(KC_T), KC_G,                                             KC_M,     RGUI_T(KC_N), RCTL_T(KC_E), RALT_T(KC_I), RSFT_T(KC_O), XXXXXXX,
-        XXXXXXX,  KC_Z,         KC_X,         KC_F,         KC_D,         KC_V,   XXXXXXX, KC_TAB,       XXXXXXX,  XXXXXXX, KC_K,     KC_H,         KC_COMM,      KC_DOT,       KC_QUOT,      XXXXXXX,
+        XXXXXXX,  KC_Z,         KC_X,         KC_F,         KC_D,         KC_V,   XXXXXXX, XCASE_ENABLE, XXXXXXX,  XXXXXXX, KC_K,     KC_H,         KC_COMM,      KC_DOT,       KC_QUOT,      XXXXXXX,
                                               KC_CAPS,      KC_TAB,       KC_ESC, SYM_OSS, NUM_REPEAT,   NUM_ENT,  NAV_SPC, BSPC_SFT, KC_DEL,       TG(_QWERTY)
     ),
                                          
@@ -196,6 +197,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
 
             add_oneshot_mods(MOD_LSFT);
+            return false;
+
+        case XCASE_ENABLE:
+            if (record->event.pressed) {
+                enable_xcase();
+            }
             return false;
 
         // app switcher
