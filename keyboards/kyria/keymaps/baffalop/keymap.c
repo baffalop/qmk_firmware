@@ -221,10 +221,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         default:
             if (record->event.pressed) {
-                uint8_t mod_state = get_mods();
-                uint8_t oneshot_mod_state = get_oneshot_mods();
-                last_modifier = mod_state > oneshot_mod_state ? mod_state : oneshot_mod_state;
-                last_keycode = GET_TAP_KC(keycode);
+                last_modifier = get_mods() > get_oneshot_mods() ? get_mods() : get_oneshot_mods();
+                if ((keycode >= QK_MOD_TAP && keycode <= QK_MOD_TAP_MAX) ||
+                    (keycode >= QK_LAYER_TAP && keycode <= QK_LAYER_TAP_MAX)) {
+                    last_keycode = GET_TAP_KC(keycode);
+                } else {
+                    last_keycode = keycode;
+                }
+
             }
             return true;
     }
